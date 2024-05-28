@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial;
+            text-align: center;
+        }
+        #round {
+            margin-bottom: 3vw;
+        }
+        #player {
+            margin-bottom: 2vw;
+        }
+
+        @media screen and (min-width: 700px) {
+            #round {
+                font-size: 2.5vw;
+            }
+            #player {
+                height: 35vw;
+                width: 62.5vw;
+            }
+        }
+        @media screen and (max-width: 700px) {
+            #round {
+                font-size: 4vw;
+            }
+            #player {
+                height: 60vw;
+                width: 80vw;
+            }
+        }
+        .questionnaire-button {
+            display: none; /* Initially hidden */
+            padding: 1vw 2vw;
+            margin-top: 2vw;
+            color: white;
+            background-color: #ff7f50;
+            border: none;
+            border-radius: 0.5vw;
+            cursor: pointer;
+        }
+        .questionnaire-button:hover {
+            background-color: #f77;
+        }
+    </style>
+</head>
+<body>
+    <div id="round">影片結束倒數時間: <span id="timer"></span></div>
+    <div id="player"></div>
+    <button class="questionnaire-button"  
+            onclick="window.open('https://sites.google.com/view/femh18200/%E9%A6%96%E9%A0%81')">填問卷換獎勵</button>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var player;
+        var duration;
+        var countdown;
+
+        function formatTime(seconds) {
+            var minutes = Math.floor(seconds / 60);
+            seconds = seconds % 60;
+
+            if (seconds < 10) {
+                seconds = '0' + seconds;
+            }
+            return minutes + ":" + Math.floor(seconds);
+        }
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                videoId: 'HeXOT87kr-I',
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function setCountdown() {
+            countdown = setInterval(function() {
+                duration--;
+                document.getElementById('timer').innerText = formatTime(duration);
+                if (duration <= 0) {
+                    clearInterval(countdown);
+                    document.getElementById('round').style.display = "none";
+                    document.querySelector('.questionnaire-button').style.display = "block";
+                }
+            }, 1000);
+        }
+
+        function onPlayerReady(event) {
+            duration = event.target.getDuration();
+            document.getElementById('timer').innerText = formatTime(duration);
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING && countdown == null) {
+                setCountdown();
+            }
+        }
+
+    </script>
+</body>
+</html>
