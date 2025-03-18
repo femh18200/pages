@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自動發送訊息</title>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+</head>
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            liff.init({ liffId: "YOUR_LIFF_ID" }).then(() => {
+                if (liff.isLoggedIn()) {
+                    liff.sendMessages([
+                        {
+                            type: "text",
+                            text: "我有綁定LINE Mini"
+                        }
+                    ]).then(() => {
+                        alert("訊息已發送！");
+                        liff.closeWindow();
+                    }).catch((err) => {
+                        console.error("發送訊息失敗:", err);
+                    });
+                } else {
+                    liff.login();
+                }
+            }).catch((err) => {
+                console.error("LIFF 初始化失敗:", err);
+            });
+        });
+    </script>
+</body>
+</html>
