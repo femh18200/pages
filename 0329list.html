@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>參加者查詢</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", Arial, sans-serif;
+      background: #f5f7fb;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    h1 { margin: 0 0 10px; font-size: 20px; }
+    .desc { font-size: 13px; color: #555; margin: 0 0 14px; line-height: 1.6; }
+    .search-box {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #fff;
+      padding: 12px;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.08);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    input[type="search"]{
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+    input[type="search"]:focus{
+      border-color:#2f6bff;
+      box-shadow: 0 0 0 4px rgba(47,107,255,.18);
+    }
+    button{
+      padding: 12px 14px;
+      border: none;
+      border-radius: 12px;
+      background: #2f6bff;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    button:hover{ filter: brightness(.96); }
+
+    .info{
+      margin: 12px 2px 10px;
+      font-size: 13px;
+      color:#444;
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .badge{
+      display:inline-block;
+      background:#eef4ff;
+      color:#2f6bff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 650;
+    }
+
+    .list{
+      background:#fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.08);
+      overflow:hidden;
+    }
+    .row{
+      padding: 12px 14px;
+      border-bottom: 1px solid #eee;
+      display:grid;
+      grid-template-columns: 160px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+    .row:last-child{ border-bottom: none; }
+
+    .name{
+      font-weight: 700;
+      word-break: break-word;
+    }
+    .org{
+      color:#333;
+      word-break: break-word;
+    }
+    .empty{
+      padding: 18px 14px;
+      color:#777;
+      text-align:center;
+    }
+
+    @media (max-width: 520px){
+      .row{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>參加者查詢</h1>
+    <p class="desc">
+      可輸入「姓名」或「機構全銜」的任一部分進行查詢（寬鬆模糊搜尋、會依相似度排序）。<br>
+      未輸入時顯示全部；查不到會顯示「查無此人」。
+    </p>
+
+    <div class="search-box">
+      <input id="search" type="search" placeholder="例如：張家其 / 亞東醫院 / 社區健康發展中心" autocomplete="off" />
+      <button id="clear" type="button">清除</button>
+    </div>
+
+    <div class="info">
+      <div>顯示筆數：<span id="count" class="badge">0</span></div>
+      <div id="status"></div>
+    </div>
+
+    <div class="list" id="list"></div>
+  </div>
+
+  <script>
+    // ✅ 你之後只要把名單貼在這裡
+    // name: 姓名（可遮罩，例如 張X其）
+    // org: 機構全銜（建議用完整名稱）
+    // displayName / displayOrg：你想顯示的文字（可跟 name/org 相同，也可更遮罩）
+    const participants = [
+      { name:"顏X珊", org:"新北市板橋區衛生所", displayName:"顏X珊", displayOrg:"新北市板橋區衛生所" },
+      { name:"羅X榕", org:"新北市板橋區衛生所", displayName:"羅X榕", displayOrg:"新北市板橋區衛生所" },
+      { name:"詹X君", org:"維發診所", displayName:"詹X君", displayOrg:"維發診所" },
+      { name:"劉X玲", org:"護理師", displayName:"劉X玲", displayOrg:"護理師" },
+      { name:"蘇X芳", org:"新北市板橋區衛生所", displayName:"蘇X芳", displayOrg:"新北市板橋區衛生所" },
+      { name:"林X君", org:"新北市烏來區衛生所", displayName:"林X君", displayOrg:"新北市烏來區衛生所" },
+      { name:"王X和", org:"新北市板橋區衛生所", displayName:"王X和", displayOrg:"新北市板橋區衛生所" },
+      { name:"楊X華", org:"新北市板橋區衛生所", displayName:"楊X華", displayOrg:"新北市板橋區衛生所" },
+      { name:"蘇X華", org:"衛生福利部樂生醫院", displayName:"蘇X華", displayOrg:"衛生福利部樂生醫院" },
+      { name:"黃X如", org:"新北市新莊區衛生所", displayName:"黃X如", displayOrg:"新北市新莊區衛生所" },
+      { name:"陳X虹", org:"新北市板橋區衛生所", displayName:"陳X虹", displayOrg:"新北市板橋區衛生所" },
+      { name:"陳X儀", org:"清福醫院", displayName:"陳X儀", displayOrg:"清福醫院" },
+      { name:"彭X君", org:"新北市鶯歌區衛生所", displayName:"彭X君", displayOrg:"新北市鶯歌區衛生所" },
+      { name:"蕭X君", org:"新北市土城區衛生所", displayName:"蕭X君", displayOrg:"新北市土城區衛生所" },
+      { name:"陳X哲", org:"里安診所", displayName:"陳X哲", displayOrg:"里安診所" },
+      { name:"葉X妤", org:"衛生福利部樂生醫院", displayName:"葉X妤", displayOrg:"衛生福利部樂生醫院" },
+      { name:"廖X凱", org:"新北市板橋區衛生所", displayName:"廖X凱", displayOrg:"新北市板橋區衛生所" },
+      { name:"曾X卿", org:"新北市鶯歌區衛生所", displayName:"曾X卿", displayOrg:"新北市鶯歌區衛生所" },
+      { name:"吳X容", org:"新北市板橋區衛生所", displayName:"吳X容", displayOrg:"新北市板橋區衛生所" },
+      { name:"張X婉", org:"新北市五股區衛生所", displayName:"張X婉", displayOrg:"新北市五股區衛生所" },
+      { name:"林X羽", org:"新北市新莊區衛生所", displayName:"林X羽", displayOrg:"新北市新莊區衛生所" },
+      { name:"鄧X慈", org:"新北市樹林區衛生所", displayName:"鄧X慈", displayOrg:"新北市樹林區衛生所" },
+      { name:"謝X軒", org:"新北市樹林區衛生所", displayName:"謝X軒", displayOrg:"新北市樹林區衛生所" },
+      { name:"陳X發", org:"成洲診所", displayName:"陳X發", displayOrg:"成洲診所" },
+      { name:"賴X倩", org:"新北市樹林區衛生所", displayName:"賴X倩", displayOrg:"新北市樹林區衛生所" },
+      { name:"陳X芬", org:"中心綜合醫院", displayName:"陳X芬", displayOrg:"中心綜合醫院" },
+      { name:"李X芳", org:"新北市三重區衛生所", displayName:"李X芳", displayOrg:"新北市三重區衛生所" },
+      { name:"吳X潔", org:"新北市樹林區衛生所", displayName:"吳X潔", displayOrg:"新北市樹林區衛生所" },
+      { name:"陳X涵", org:"樹林區衛生所", displayName:"陳X涵", displayOrg:"樹林區衛生所" },
+      { name:"鄧X慈", org:"新北市林口區衛生所", displayName:"鄧X慈", displayOrg:"新北市林口區衛生所" },
+      { name:"徐X雯", org:"興安診所", displayName:"徐X雯", displayOrg:"興安診所" },
+      { name:"宋X璟", org:"新北市新莊區衛生所", displayName:"宋X璟", displayOrg:"新北市新莊區衛生所" },
+      { name:"洪X娟", org:"土城衛生所", displayName:"洪X娟", displayOrg:"土城衛生所" },
+      { name:"陳X樺", org:"勝威食品企業有限公司", displayName:"陳X樺", displayOrg:"勝威食品企業有限公司" },
+      { name:"吳X豪", org:"衛生福利部樂生醫院", displayName:"吳X豪", displayOrg:"衛生福利部樂生醫院" },
+      { name:"李X妹", org:"亞東紀念醫院", displayName:"李X妹", displayOrg:"亞東紀念醫院" },
+      { name:"黃X玲", org:"興安診所", displayName:"黃X玲", displayOrg:"興安診所" },
+      { name:"林X聖", org:"新北市瑞芳區衛生所", displayName:"林X聖", displayOrg:"新北市瑞芳區衛生所" },
+      { name:"陳X珍", org:"龍興診所", displayName:"陳X珍", displayOrg:"龍興診所" },
+      { name:"林X敏", org:"土城衛生所", displayName:"林X敏", displayOrg:"土城衛生所" },
+      { name:"方X彗", org:"新北市五股區衛生所", displayName:"方X彗", displayOrg:"新北市五股區衛生所" },
+      { name:"謝X琛", org:"新北市板橋區衛生所", displayName:"謝X琛", displayOrg:"新北市板橋區衛生所" },
+      { name:"李X育", org:"天主教輔仁大學附設醫院", displayName:"李X育", displayOrg:"天主教輔仁大學附設醫院" },
+      { name:"張X芳", org:"新北市烏來區衛生所", displayName:"張X芳", displayOrg:"新北市烏來區衛生所" },
+      { name:"鄭X晏", org:"新北市金山區衛生所", displayName:"鄭X晏", displayOrg:"新北市金山區衛生所" },
+      { name:"白X芬", org:"亞東紀念醫院", displayName:"白X芬", displayOrg:"亞東紀念醫院" },
+      { name:"石X萍", org:"龍興診所", displayName:"石X萍", displayOrg:"龍興診所" },
+      { name:"吳X娟", org:"謝坤川診所", displayName:"吳X娟", displayOrg:"謝坤川診所" },
+      { name:"吳X彥", org:"亞東紀念醫院", displayName:"吳X彥", displayOrg:"亞東紀念醫院" },
+      { name:"阮X婷", org:"亞東紀念醫院", displayName:"阮X婷", displayOrg:"亞東紀念醫院" },
+      { name:"林X潔", org:"宏仁醫院", displayName:"林X潔", displayOrg:"宏仁醫院" },
+      { name:"邱X霖", org:"亞東紀念醫院", displayName:"邱X霖", displayOrg:"亞東紀念醫院" },
+      { name:"李X君", org:"新北市板橋區衛生所", displayName:"李X君", displayOrg:"新北市板橋區衛生所" },
+      { name:"徐X平", org:"亞東紀念醫院", displayName:"徐X平", displayOrg:"亞東紀念醫院" },
+      { name:"徐X翔", org:"亞東紀念醫院", displayName:"徐X翔", displayOrg:"亞東紀念醫院" },
+      { name:"李X慧", org:"興安診所", displayName:"李X慧", displayOrg:"興安診所" },
+      { name:"陳X宏", org:"亞東紀念醫院", displayName:"陳X宏", displayOrg:"亞東紀念醫院" },
+      { name:"邱X鈞", org:"新北市鶯歌區衛生所", displayName:"邱X鈞", displayOrg:"新北市鶯歌區衛生所" },
+      { name:"彭X森", org:"亞東紀念醫院", displayName:"彭X森", displayOrg:"亞東紀念醫院" },
+      { name:"張X婷", org:"亞東紀念醫院", displayName:"張X婷", displayOrg:"亞東紀念醫院" },
+      { name:"楊X喬", org:"亞東紀念醫院", displayName:"楊X喬", displayOrg:"亞東紀念醫院" },
+      { name:"蔡X全", org:"亞東紀念醫院", displayName:"蔡X全", displayOrg:"亞東紀念醫院" },
+      { name:"莊X萍", org:"新北市鶯歌區衛生所", displayName:"莊X萍", displayOrg:"新北市鶯歌區衛生所" },
+      { name:"丁X庭", org:"新北市五股區衛生所", displayName:"丁X庭", displayOrg:"新北市五股區衛生所" },
+      { name:"蔣X穎", org:"亞東紀念醫院", displayName:"蔣X穎", displayOrg:"亞東紀念醫院" },
+      { name:"鄭X芸", org:"亞東紀念醫院", displayName:"鄭X芸", displayOrg:"亞東紀念醫院" },
+      { name:"謝X芳", org:"亞東紀念醫院", displayName:"謝X芳", displayOrg:"亞東紀念醫院" },
+      { name:"陳X聲", org:"亞東醫院", displayName:"陳X聲", displayOrg:"亞東醫院" },
+      { name:"魏X玲", org:"新北市三重區衛生所", displayName:"魏X玲", displayOrg:"新北市三重區衛生所" },
+      { name:"李X瑩", org:"汐止國泰綜合醫院", displayName:"李X瑩", displayOrg:"汐止國泰綜合醫院" },
+      { name:"溫X玲", org:"新北市五股區衛生所", displayName:"溫X玲", displayOrg:"新北市五股區衛生所" },
+      { name:"吳X姍", org:"新北市板橋區衛生所", displayName:"吳X姍", displayOrg:"新北市板橋區衛生所" },
+      { name:"黃X瑰", org:"樂佳診所", displayName:"黃X瑰", displayOrg:"樂佳診所" },
+      { name:"蔡X佳", org:"富力好診所", displayName:"蔡X佳", displayOrg:"富力好診所" },
+      { name:"周X慧", org:"醫療財團法人徐元智先生醫藥基金會亞東紀念醫院", displayName:"周X慧", displayOrg:"醫療財團法人徐元智先生醫藥基金會亞東紀念醫院" },
+      { name:"李X珊", org:"良安診所", displayName:"李X珊", displayOrg:"良安診所" },
+      { name:"蘇X媛", org:"醫療財團法人徐元智先生醫藥基金會亞東紀念醫院", displayName:"蘇X媛", displayOrg:"醫療財團法人徐元智先生醫藥基金會亞東紀念醫院" },
+      { name:"林X莉", org:"欣和診所", displayName:"林X莉", displayOrg:"欣和診所" },
+      { name:"鄭X婷", org:"懿麟診所", displayName:"鄭X婷", displayOrg:"懿麟診所" },
+      { name:"劉X彤", org:"林筱琪兒科診所", displayName:"劉X彤", displayOrg:"林筱琪兒科診所" },
+      { name:"孫X喬", org:"新北市立土城醫院（委託長庚醫療財團法人興建經營）", displayName:"孫X喬", displayOrg:"新北市立土城醫院（委託長庚醫療財團法人興建經營）" },
+      { name:"顏X綾", org:"樂田耳鼻喉科診所", displayName:"顏X綾", displayOrg:"樂田耳鼻喉科診所" },
+      { name:"李X維", org:"佳仁診所", displayName:"李X維", displayOrg:"佳仁診所" },
+      { name:"王X賢", org:"亞東醫院", displayName:"王X賢", displayOrg:"亞東醫院" },
+      { name:"林X伶", org:"新北市平溪區衛生所", displayName:"林X伶", displayOrg:"新北市平溪區衛生所" },
+      { name:"張X婷", org:"新北市金山區衛生所", displayName:"張X婷", displayOrg:"新北市金山區衛生所" },
+      { name:"劉X軒", org:"新北市立土城醫院", displayName:"劉X軒", displayOrg:"新北市立土城醫院" },
+      { name:"陳X真", org:"詠安藥局 藥師", displayName:"陳X真", displayOrg:"詠安藥局 藥師" },
+      { name:"林X勝", org:"幸湖診所", displayName:"林X勝", displayOrg:"幸湖診所" },
+      { name:"盧X輝", org:"聯安診所", displayName:"盧X輝", displayOrg:"聯安診所" },
+      { name:"林X珠", org:"沈德昌診所", displayName:"林X珠", displayOrg:"沈德昌診所" },
+      { name:"曾X儀", org:"建嘉小兒科診所", displayName:"曾X儀", displayOrg:"建嘉小兒科診所" },
+      { name:"吳X芳", org:"衛生福利部嘉義醫院", displayName:"吳X芳", displayOrg:"衛生福利部嘉義醫院" },
+      { name:"施X翰", org:"自立診所", displayName:"施X翰", displayOrg:"自立診所" },
+      { name:"林X含", org:"醫療財團法人徐元智先生醫藥基金會亞東紀念醫院", displayName:"林X含", displayOrg:"醫療財團法人徐元智先生醫藥基金會亞東紀念醫院" },
+      { name:"蔡X珍", org:"佑康聯合診所", displayName:"蔡X珍", displayOrg:"佑康聯合診所" },
+      { name:"葉X韻", org:"板橋區衛生所", displayName:"葉X韻", displayOrg:"板橋區衛生所" },
+      { name:"曹X峻", org:"新原診所", displayName:"曹X峻", displayOrg:"新原診所" },
+      { name:"諶X慧", org:"國家中山科學研究院石園聯合診所", displayName:"諶X慧", displayOrg:"國家中山科學研究院石園聯合診所" },
+      { name:"羅X玲", org:"仁翔診所", displayName:"羅X玲", displayOrg:"仁翔診所" },
+      { name:"汪X建", org:"廣祥診所", displayName:"汪X建", displayOrg:"廣祥診所" },
+      { name:"郭X雁", org:"護理師", displayName:"郭X雁", displayOrg:"護理師" },
+      { name:"郭X芸", org:"新北市土城區衛生所", displayName:"郭X芸", displayOrg:"新北市土城區衛生所" },
+      { name:"陳X欣", org:"無", displayName:"陳X欣", displayOrg:"無" },
+      { name:"劉X偉", org:"無", displayName:"劉X偉", displayOrg:"無" },
+      { name:"張X勝", org:"祐生耳鼻喉科診所", displayName:"張X勝", displayOrg:"祐生耳鼻喉科診所" },
+      { name:"江X昌", org:"昕新智慧診所", displayName:"江X昌", displayOrg:"昕新智慧診所" },
+      { name:"賴X汝", org:"新北市石門區衞生所", displayName:"賴X汝", displayOrg:"新北市石門區衞生所" },
+      { name:"黃X珠", org:"新北市石門衛生所", displayName:"黃X珠", displayOrg:"新北市石門衛生所" },
+      { name:"張X華", org:"仁愛醫院", displayName:"張X華", displayOrg:"仁愛醫院" },
+      { name:"陳X嫻", org:"新北市新店區衛生所", displayName:"陳X嫻", displayOrg:"新北市新店區衛生所" },
+      { name:"黃X章", org:"中欣診所", displayName:"黃X章", displayOrg:"中欣診所" },
+      { name:"林X蒂", org:"聯安診所", displayName:"林X蒂", displayOrg:"聯安診所" },
+      { name:"林X仁", org:"康健家庭醫學科診所", displayName:"林X仁", displayOrg:"康健家庭醫學科診所" },
+      { name:"羅X鈴", org:"新北市金山區衛生所", displayName:"羅X鈴", displayOrg:"新北市金山區衛生所" },
+      { name:"吳X玲", org:"新北市蘆洲區衛生所", displayName:"吳X玲", displayOrg:"新北市蘆洲區衛生所" },
+      { name:"呂X瑩", org:"仁愛醫院", displayName:"呂X瑩", displayOrg:"仁愛醫院" },
+      { name:"朱X盈", org:"醫師兼主任", displayName:"朱X盈", displayOrg:"醫師兼主任" },
+      { name:"胡X輝", org:"仁愛醫院", displayName:"胡X輝", displayOrg:"仁愛醫院" },
+      { name:"廖X智", org:"亞東紀念醫院", displayName:"廖X智", displayOrg:"亞東紀念醫院" },
+      { name:"梁X伶", org:"鴻恩診所", displayName:"梁X伶", displayOrg:"鴻恩診所" },
+      { name:"黃X美", org:"亞東紀念醫院", displayName:"黃X美", displayOrg:"亞東紀念醫院" },
+      { name:"林X宜", org:"竹北博愛國小", displayName:"林X宜", displayOrg:"竹北博愛國小" },
+      { name:"張X雄", org:"桃園小太陽耳鼻喉科診所", displayName:"張X雄", displayOrg:"桃園小太陽耳鼻喉科診所" },
+      { name:"陳X瑩", org:"新北市三重區衛生所", displayName:"陳X瑩", displayOrg:"新北市三重區衛生所" },
+      { name:"温X閔", org:"新莊安庚診所", displayName:"温X閔", displayOrg:"新莊安庚診所" },
+      { name:"徐X垣", org:"新莊徐耳鼻喉科診所", displayName:"徐X垣", displayOrg:"新莊徐耳鼻喉科診所" },
+      { name:"吳X蘭", org:"佳仁診所", displayName:"吳X蘭", displayOrg:"佳仁診所" },
+      { name:"許X壬", org:"和安診所", displayName:"許X壬", displayOrg:"和安診所" },
+      { name:"戴X如", org:"土城桃庚診所", displayName:"戴X如", displayOrg:"土城桃庚診所" },
+      { name:"郭X心", org:"新北市板橋區衛生所", displayName:"郭X心", displayOrg:"新北市板橋區衛生所" },
+      { name:"趙X潔", org:"新北市三重區衛生所", displayName:"趙X潔", displayOrg:"新北市三重區衛生所" },
+      { name:"鄭X樺", org:"好心肝健康管理中心", displayName:"鄭X樺", displayOrg:"好心肝健康管理中心" },
+      { name:"陳X芳", org:"新北市永和區衛生所", displayName:"陳X芳", displayOrg:"新北市永和區衛生所" },
+      { name:"柯X君", org:"新莊明新診所", displayName:"柯X君", displayOrg:"新莊明新診所" },
+      { name:"許X豪", org:"許芳豪內科小兒科診所", displayName:"許X豪", displayOrg:"許芳豪內科小兒科診所" },
+      { name:"陳X恩", org:"新北市樹林區衛生所", displayName:"陳X恩", displayOrg:"新北市樹林區衛生所" },
+      { name:"黃X春", org:"仁康診所", displayName:"黃X春", displayOrg:"仁康診所" },
+      { name:"廖X秀", org:"新店區衛生所", displayName:"廖X秀", displayOrg:"新店區衛生所" },
+      { name:"池X曄", org:"明品診所", displayName:"池X曄", displayOrg:"明品診所" },
+      { name:"湯X滿", org:"淡水馬偕醫院", displayName:"湯X滿", displayOrg:"淡水馬偕醫院" },
+      { name:"黃X堤", org:"立康南勢診所", displayName:"黃X堤", displayOrg:"立康南勢診所" },
+      { name:"林X圭", org:"澤生診所", displayName:"林X圭", displayOrg:"澤生診所" },
+      { name:"吳X秀", org:"高健診所", displayName:"吳X秀", displayOrg:"高健診所" },
+      { name:"陳X寗", org:"板新醫院", displayName:"陳X寗", displayOrg:"板新醫院" },
+      { name:"蔡X梅", org:"仁愛醫院", displayName:"蔡X梅", displayOrg:"仁愛醫院" },
+      { name:"翁X德", org:"吉康小兒科診所", displayName:"翁X德", displayOrg:"吉康小兒科診所" },
+      { name:"莊X彤", org:"行天宮醫療志業醫療財團法人", displayName:"莊X彤", displayOrg:"行天宮醫療志業醫療財團法人" },
+      { name:"柳X勛", org:"聯德診所", displayName:"柳X勛", displayOrg:"聯德診所" },
+      { name:"李X容", org:"王嘉興診所", displayName:"李X容", displayOrg:"王嘉興診所" },
+      { name:"李X璇", org:"新北市汐止區衛生所", displayName:"李X璇", displayOrg:"新北市汐止區衛生所" },
+      { name:"石X汝", org:"銀享樂園老人長期照顧中心", displayName:"石X汝", displayOrg:"銀享樂園老人長期照顧中心" },
+      { name:"賴X燕", org:"蘆洲成功耳鼻喉科診所", displayName:"賴X燕", displayOrg:"蘆洲成功耳鼻喉科診所" },
+      { name:"黃X守", org:"華安診所", displayName:"黃X守", displayOrg:"華安診所" },
+      { name:"鄭X瑄", org:"久翔食品股份有限公司", displayName:"鄭X瑄", displayOrg:"久翔食品股份有限公司" },
+      { name:"方X傑", org:"衛生福利部桃園醫院", displayName:"方X傑", displayOrg:"衛生福利部桃園醫院" },
+      { name:"葉X煌", org:"三重祥安診所", displayName:"葉X煌", displayOrg:"三重祥安診所" },
+      { name:"殷X雄", org:"高健診所", displayName:"殷X雄", displayOrg:"高健診所" },
+      { name:"黃X文", org:"恩主公醫院", displayName:"黃X文", displayOrg:"恩主公醫院" },
+      { name:"吳X基", org:"宏愛診所", displayName:"吳X基", displayOrg:"宏愛診所" },
+      { name:"曾X憲", org:"亞東醫院", displayName:"曾X憲", displayOrg:"亞東醫院" },
+      { name:"孫X弘", org:"禾順診所", displayName:"孫X弘", displayOrg:"禾順診所" },
+      { name:"林X吟", org:"至祥診所", displayName:"林X吟", displayOrg:"至祥診所" },
+      { name:"高X怡", org:"新北市八里區衛生所", displayName:"高X怡", displayOrg:"新北市八里區衛生所" },
+      { name:"李X宜", org:"新北市坪林區衛生所", displayName:"李X宜", displayOrg:"新北市坪林區衛生所" },
+      { name:"郭X津", org:"德安婦產科診所", displayName:"郭X津", displayOrg:"德安婦產科診所" },
+      { name:"高X亷", org:"高固亷診所", displayName:"高X亷", displayOrg:"高固亷診所" },
+      { name:"盧X君", org:"醫療財團法人徐元智先生醫藥基金會亞東紀念醫院", displayName:"盧X君", displayOrg:"醫療財團法人徐元智先生醫藥基金會亞東紀念醫院" },
+      { name:"張X中", org:"北醫（教授）", displayName:"張X中", displayOrg:"北醫（教授）" },
+      { name:"謝X芳", org:"三重祥安診所", displayName:"謝X芳", displayOrg:"三重祥安診所" },
+      { name:"溫X欣", org:"衛生福利部雙和醫院", displayName:"溫X欣", displayOrg:"衛生福利部雙和醫院" },
+      { name:"楊X晴", org:"瑞明診所", displayName:"楊X晴", displayOrg:"瑞明診所" },
+      { name:"白X雯", org:"常春聯合診所", displayName:"白X雯", displayOrg:"常春聯合診所" },
+      { name:"詹X烈", org:"寶祥診所", displayName:"詹X烈", displayOrg:"寶祥診所" },
+      { name:"吳X琼", org:"吳瑞瓊小兒科", displayName:"吳X琼", displayOrg:"吳瑞瓊小兒科" },
+      { name:"蕭X英", org:"常春聯合診所", displayName:"蕭X英", displayOrg:"常春聯合診所" },
+      { name:"蕭X軒", org:"常春聯合診所", displayName:"蕭X軒", displayOrg:"常春聯合診所" },
+      { name:"廖X斐", org:"藥師", displayName:"廖X斐", displayOrg:"藥師" },
+      { name:"歐X君", org:"常春聯合診所", displayName:"歐X君", displayOrg:"常春聯合診所" },
+      { name:"黃X穎", org:"北醫附設醫院", displayName:"黃X穎", displayOrg:"北醫附設醫院" },
+      { name:"楊X熒", org:"臺北醫學大學附設醫院", displayName:"楊X熒", displayOrg:"臺北醫學大學附設醫院" },
+      { name:"楊X元", org:"味安餐飲股份有限公司", displayName:"楊X元", displayOrg:"味安餐飲股份有限公司" },
+      { name:"王X樑", org:"永和復康醫院", displayName:"王X樑", displayOrg:"永和復康醫院" },
+      { name:"林X章", org:"龍華診所", displayName:"林X章", displayOrg:"龍華診所" },
+      { name:"吳X君", org:"臺北醫學大學附設醫院", displayName:"吳X君", displayOrg:"臺北醫學大學附設醫院" },
+      { name:"伍X寧", org:"台安醫院", displayName:"伍X寧", displayOrg:"台安醫院" },
+      { name:"杜X蘭", org:"晉安診所", displayName:"杜X蘭", displayOrg:"晉安診所" },
+      { name:"詹X貞", org:"晉安診所", displayName:"詹X貞", displayOrg:"晉安診所" },
+      { name:"曾X雯", org:"專科護理師", displayName:"曾X雯", displayOrg:"專科護理師" },
+      { name:"楊X瑜", org:"亞東紀念醫院", displayName:"楊X瑜", displayOrg:"亞東紀念醫院" },
+      { name:"王X欣", org:"亞東紀念醫院", displayName:"王X欣", displayOrg:"亞東紀念醫院" },
+      { name:"許X卿", org:"亞東紀念醫院", displayName:"許X卿", displayOrg:"亞東紀念醫院" },
+      { name:"王X元", org:"景賀診所", displayName:"王X元", displayOrg:"景賀診所" },
+      { name:"陳X喂", org:"靜安診所", displayName:"陳X喂", displayOrg:"靜安診所" },
+      { name:"林X玉", org:"新北市深坑區衛生所", displayName:"林X玉", displayOrg:"新北市深坑區衛生所" },
+      { name:"李X惠", org:"五股區衛生所", displayName:"李X惠", displayOrg:"五股區衛生所" },
+      { name:"張X甄", org:"薇妮斯整形外科診所", displayName:"張X甄", displayOrg:"薇妮斯整形外科診所" },
+      { name:"劉X珊", org:"三峽啄木鳥藥局", displayName:"劉X珊", displayOrg:"三峽啄木鳥藥局" },
+      { name:"蕭X忠", org:"家安藥師藥局", displayName:"蕭X忠", displayOrg:"家安藥師藥局" },
+      { name:"陳X如", org:"明醫達特楊眼科", displayName:"陳X如", displayOrg:"明醫達特楊眼科" },
+    ];
+
+    const norm = (s) =>
+      (s ?? "")
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " "); // 把多空白壓成一個
+
+    const searchInput = document.getElementById("search");
+    const listEl = document.getElementById("list");
+    const countEl = document.getElementById("count");
+    const statusEl = document.getElementById("status");
+    const clearBtn = document.getElementById("clear");
+
+    function stripMaskName(s){
+  // 把遮罩符號拿掉：張X其 → 張其
+  return norm(s).replace(/x/gi, "");
+}
+
+function maskedNameMatchScore(maskedNameRaw, queryRaw){
+  // 回傳加分（0 表示不命中）
+  const masked = norm(maskedNameRaw);
+  const q = norm(queryRaw);
+  if (!masked || !q) return 0;
+
+  // 如果名單不是遮罩名（沒有X），就不走這條（交給原本 includes/startsWith）
+  if (!masked.includes("x")) return 0;
+
+  // 例：masked = "張x其" → 固定首尾字
+  const first = masked[0];
+  const last = masked[masked.length - 1];
+
+  // 使用者輸入至少 2 個字，才進行遮罩推斷（避免只打一個字就誤判）
+  if (q.length < 2) return 0;
+
+  let s = 0;
+
+  // ✅ 首尾同時命中：張家其 vs 張x其
+  if (q[0] === first && q[q.length - 1] === last) s += 260;
+
+  // ✅ 只命中首字或尾字（稍微加分，讓排序更合理）
+  if (q[0] === first) s += 40;
+  if (q[q.length - 1] === last) s += 40;
+
+  // ✅ 若去掉X後（張其）是使用者輸入的子序列/包含，也加分
+  const stripped = stripMaskName(masked);
+  if (q.includes(stripped) || stripped.includes(q)) s += 80;
+
+  return s;
+}
+
+    // 相似度打分（越高越前面）
+    function score(item, q) {
+      const name = norm(item.name);
+      const org = norm(item.org);
+      const dn = norm(item.displayName);
+      const doo = norm(item.displayOrg);
+      const all = `${name} ${org} ${dn} ${doo}`.trim();
+
+      let s = 0;
+      if (!q) return s;
+      
+      s += maskedNameMatchScore(item.name, q);
+      s += maskedNameMatchScore(item.displayName ?? item.name, q);
+
+      // 1) 完全相等（最強）
+      if (name === q) s += 1000;
+      if (org === q)  s += 950;
+
+      // 2) 前綴命中（很像）
+      if (name.startsWith(q)) s += 320;
+      if (org.startsWith(q))  s += 300;
+
+      // 3) 包含命中（寬鬆）
+      if (name.includes(q)) s += 220;
+      if (org.includes(q))  s += 210;
+      if (all.includes(q))  s += 120;
+
+      // 4) token 命中（用空白切；例如「亞東 醫院」）
+      const tokens = q.split(/\s+/).filter(Boolean);
+      for (const t of tokens) {
+        if (t.length === 0) continue;
+        if (name.includes(t)) s += 60;
+        else if (org.includes(t)) s += 55;
+        else if (all.includes(t)) s += 30;
+      }
+
+      // 5) 中文逐字命中（例如「張家其」去找「張X其」仍能排前）
+      for (const ch of Array.from(q)) {
+        if (!ch.trim()) continue;
+        if (name.includes(ch)) s += 18;
+        else if (org.includes(ch)) s += 14;
+        else if (all.includes(ch)) s += 8;
+      }
+
+      // 6) 同分時的小偏好：姓名命中略優先
+      if (name.includes(q)) s += 3;
+
+      return s;
+    }
+
+    function search(qRaw) {
+      const q = norm(qRaw);
+      if (!q) return participants;
+
+      return participants
+        .map(p => ({ p, s: score(p, q) }))
+        .filter(x => x.s > 0)
+        .sort((a, b) => b.s - a.s)
+        .map(x => x.p);
+    }
+
+    function render(data, qRaw) {
+      const q = norm(qRaw);
+      listEl.innerHTML = "";
+      countEl.textContent = data.length;
+
+      statusEl.textContent = (q && data.length === 0) ? "查無此人" : "";
+
+      if (data.length === 0) {
+        const div = document.createElement("div");
+        div.className = "empty";
+        div.textContent = q ? "查無此人" : "尚無資料";
+        listEl.appendChild(div);
+        return;
+      }
+
+      for (const item of data) {
+        const row = document.createElement("div");
+        row.className = "row";
+
+        const nameEl = document.createElement("div");
+        nameEl.className = "name";
+        nameEl.textContent = item.displayName ?? item.name ?? "";
+
+        const orgEl = document.createElement("div");
+        orgEl.className = "org";
+        orgEl.textContent = item.displayOrg ?? item.org ?? "";
+
+        row.appendChild(nameEl);
+        row.appendChild(orgEl);
+        listEl.appendChild(row);
+      }
+    }
+
+    function update() {
+      const q = searchInput.value;
+      render(search(q), q);
+    }
+
+    searchInput.addEventListener("input", update);
+    clearBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      searchInput.focus();
+      update();
+    });
+
+    // 初始化：顯示全部
+    render(participants, "");
+  </script>
+</body>
+</html>
