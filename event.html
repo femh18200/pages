@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>篩檢活動表</title>
+  <style>
+    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",Arial,sans-serif; background:#f5f7fb; }
+    .wrap{ max-width:920px; margin:0 auto; padding:20px 14px 44px; }
+   
+    h1{ margin:0 0 10px; font-size:25px; }
+    .sub{ margin:0 0 14px; color:#555; font-size:13px; line-height:1.6; }
+
+    .bar{
+      position:sticky; top:0; z-index:10;
+      background:#fff; border-radius:14px; padding:12px;
+      box-shadow:0 6px 18px rgba(0,0,0,.08);
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    input[type="search"]{
+      flex:1; min-width:220px;
+      padding:12px 12px; font-size:16px;
+      border-radius:12px; border:1px solid #ccc; outline:none;
+    }
+    input[type="search"]:focus{ border-color:#2f6bff; box-shadow:0 0 0 4px rgba(47,107,255,.18); }
+
+    .chips{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .chip{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid #e3e6ee; background:#fafbff;
+      font-size:13px; cursor:pointer; user-select:none;
+    }
+    .chip input{ width:16px; height:16px; }
+
+    button{
+      padding:12px 14px; border:none; border-radius:12px;
+      background:#2f6bff; color:#fff; font-size:14px; cursor:pointer;
+      white-space:nowrap;
+    }
+    button:hover{ filter: brightness(.96); }
+
+    .meta{
+      margin:12px 2px 10px; font-size:13px; color:#444;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      align-items:center;
+    }
+    .badge{ display:inline-block; background:#eef4ff; color:#2f6bff; padding:4px 10px; border-radius:999px; font-weight:650; }
+    .mini{ color:#334155; font-weight:650; }
+
+    .list{ display:flex; flex-direction:column; gap:10px; margin-top:10px; }
+    .card{
+      background:#fff; border-radius:14px; padding:14px;
+      box-shadow:0 6px 18px rgba(0,0,0,.08);
+    }
+    .card.past{ opacity:.62; filter:grayscale(.15); }
+
+    .top{ display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center; }
+    .subject{ font-weight:800; font-size:16px; }
+    .past-badge{
+      display:inline-block;
+      font-size:12px;
+      font-weight:800;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#f1f5f9;
+      color:#334155;
+      border:1px solid #e2e8f0;
+      white-space:nowrap;
+    }
+
+    .tags{ display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 10px; }
+    .tag{
+      font-size:12px; font-weight:800;
+      padding:6px 10px; border-radius:10px;
+      border:1px solid transparent;
+    }
+    .t-ms { background:#fff1f2; border-color:#fecdd3; color:#9f1239; } /* 乳攝 */
+    .t-pap{ background:#f0fdf4; border-color:#bbf7d0; color:#166534; } /* 子抹 */
+    .t-fit{ background:#eff6ff; border-color:#bfdbfe; color:#1d4ed8; } /* 腸篩 */
+    .t-bc { background:#faf5ff; border-color:#e9d5ff; color:#6b21a8; } /* BC肝 */
+    .t-elder {background:#fffbeb;border-color:#fde68a;color:#92400e; } /* 成老健 */
+
+    .time{ color:#111; font-size:14px; margin:2px 0 6px; }
+    .loc{ color:#333; font-size:14px; line-height:1.5; }
+    .actions{ margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
+    .link{
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none; color:#2f6bff; font-weight:800;
+      padding:10px 12px; border-radius:12px; border:1px solid #dbe6ff;
+      background:#f7faff;
+    }
+
+    .empty{
+      background:#fff; border-radius:14px; padding:18px;
+      box-shadow:0 6px 18px rgba(0,0,0,.08);
+      text-align:center; color:#777;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>亞東醫院社區健康發展中心</h1>
+    <h1>3月篩檢活動表</h1>
+    <p class="sub">
+      可搜尋「地址/區域/項目/時間」（例：板橋、光華里、西門街、乳攝、BC、3/2、14:00、17:30）。<br>
+      預設只顯示未來活動；勾選可顯示已結束活動。
+    </p>
+
+    <div class="bar">
+      <input id="q" type="search" placeholder="搜尋：板橋 / 光華里 / 乳攝 / 3/2 / 14:00" autocomplete="off" />
+      <button id="clearBtn" type="button">清除</button>
+
+      <div class="chips" aria-label="快速篩選">
+        <label class="chip"><input type="checkbox" value="乳攝" class="flt">乳攝</label>
+        <label class="chip"><input type="checkbox" value="子抹" class="flt">子抹</label>
+        <label class="chip"><input type="checkbox" value="腸篩" class="flt">腸篩</label>
+        <label class="chip"><input type="checkbox" value="BC" class="flt">BC肝</label>
+        <label class="chip"><input type="checkbox" value="成老健" class="flt">成老健</label>
+
+        <label class="chip" title="勾選後才會顯示今天之前已結束的活動">
+          <input type="checkbox" id="showPast">
+          顯示已結束活動
+        </label>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div>
+        顯示筆數：<span id="count" class="badge">0</span>
+        <span class="mini" id="stats"></span>
+      </div>
+      <div id="status"></div>
+    </div>
+
+    <div id="list" class="list"></div>
+  </div>
+
+  <script>
+    // ✅ 你之後只要把活動資料貼在這裡（建議用 YYYY-MM-DD HH:MM 24小時制）
+    const events = [
+       { subject:"板橋 林家花園", start:"2026-03-02 14:00", end:"2026-03-02 20:00", desc:"乳攝、子抹、腸篩", location:"新北市板橋區光華里西門街28號" },
+{ subject:"林口 林口扶輪公園", start:"2026-03-03 17:30", end:"2026-03-03 20:30", desc:"子抹、腸篩", location:"新北市林口區南勢里文化二路一段309巷1號" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-04 08:00", end:"2026-03-04 11:30", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-04 13:00", end:"2026-03-04 16:30", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-04 17:00", end:"2026-03-04 19:30", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"板橋 板橋華翠市民活動中心", start:"2026-03-04 16:00", end:"2026-03-04 20:00", desc:"子抹、腸篩、BC", location:"新北市板橋區華翠里莒光路133巷42號" },
+{ subject:"樹林 樹林立康診所", start:"2026-03-05 08:30", end:"2026-03-05 11:30", desc:"乳攝、子抹", location:"新北市樹林區樹福里日新街39號" },
+{ subject:"樹林 樹林惠生診所", start:"2026-03-05 17:00", end:"2026-03-05 20:00", desc:"乳攝、腸篩", location:"新北市圳生里保安街一段 190 號" },
+{ subject:"中山 中山南山人壽", start:"2026-03-06 15:00", end:"2026-03-06 20:00", desc:"子抹、腸篩", location:"台北市中山區民權東路二段144號" },
+{ subject:"土城 土城永豐清水活動中心(發報告)", start:"2026-03-07 09:00", end:"2026-03-07 11:00", desc:"", location:"新北市土城區永豐里清水路234巷5號" },
+{ subject:"板橋 板橋總圖", start:"2026-03-07 13:00", end:"2026-03-07 16:30", desc:"乳攝、子抹、腸篩", location:"新北市板橋區華興里貴興路139號側門" },
+{ subject:"土城 土城廣福國小整篩6", start:"2026-03-08 08:30", end:"2026-03-08 11:30", desc:"乳攝、子抹、腸篩、口腔、BC、成老健", location:"新北市土城區廣福里學府路一段127號" },
+{ subject:"板橋 大遠百", start:"2026-03-08 15:00", end:"2026-03-08 20:00", desc:"乳攝、子抹、腸篩", location:"新北市板橋區福丘里新站路28號" },
+{ subject:"新莊 新莊台北大城", start:"2026-03-09 15:00", end:"2026-03-09 20:00", desc:"子抹、腸篩", location:"新北市新莊區昌明里昌平街82巷13弄7-9號" },
+{ subject:"三重 三重慈愛活動中心", start:"2026-03-10 15:00", end:"2026-03-10 20:00", desc:"子抹", location:"新北市三重區慈愛里仁美街108巷13號" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-11 08:00", end:"2026-03-11 20:00", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-11 13:00", end:"2026-03-11 16:30", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-11 17:00", end:"2026-03-11 19:30", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"中山 中山興安公園", start:"2026-03-11 16:30", end:"2026-03-11 20:00", desc:"子抹、腸篩", location:"台北市中山區朱馥里興安街與遼寧街交叉口" },
+{ subject:"土城 土城衛生所(小車)", start:"2026-03-12 08:00", end:"2026-03-12 12:00", desc:"乳攝", location:"新北市土城區埤塘里和平路26號" },
+{ subject:"松山 松山龍田里社區健康篩檢", start:"2026-03-12 09:00", end:"2026-03-12 12:00", desc:"子抹", location:"中山興安公園" },
+{ subject:"蘆洲 蘆洲靜思堂", start:"2026-03-12 15:00", end:"2026-03-12 20:00", desc:"子抹、腸篩", location:"新北市蘆洲區正義里長樂路125號" },
+{ subject:"板橋 板橋愛買", start:"2026-03-13 10:30", end:"2026-03-13 18:30", desc:"乳攝、子抹、腸篩", location:"新北市板橋區華貴里貴興路101號" },
+{ subject:"八里 八里文康活動中心整篩7", start:"2026-03-14 08:30", end:"2026-03-14 11:30", desc:"乳攝、子抹、腸篩、口腔、BC、成老健", location:"新北市八里區頂罟里八里大道22號" },
+{ subject:"信義 景聯區民活動中心整篩8", start:"2026-03-15 08:30", end:"2026-03-15 11:30", desc:"乳攝、子抹、腸篩、口腔、BC、成老健", location:"台北市信義區景聯里基隆路二段39巷37弄2號" },
+{ subject:"永和 永和頂溪國小", start:"2026-03-15 15:00", end:"2026-03-15 20:00", desc:"子抹、腸篩", location:"新北市永和區文化里文化路133號" },
+{ subject:"林口 林口富貴公園", start:"2026-03-17 17:30", end:"2026-03-17 20:30", desc:"子抹、腸篩", location:"林口區湖南里文化二路113巷" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-18 08:00", end:"2026-03-18 19:30", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-18 13:00", end:"2026-03-18 16:30", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-18 17:00", end:"2026-03-18 19:30", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"板橋 板橋新興里里辦", start:"2026-03-18 16:00", end:"2026-03-18 20:00", desc:"子抹、腸篩、BC", location:"新北市板橋區新興里南興路1號1樓" },
+{ subject:"萬華 萬華凌霄里辦公處", start:"2026-03-20 09:00", end:"2026-03-20 12:00", desc:"子抹、腸篩", location:"台北市萬華區凌霄里中華路二段504巷20號" },
+{ subject:"士林 士林健康服務中心", start:"2026-03-20 17:00", end:"2026-03-20 20:00", desc:"子抹", location:"台北市士林區福德里中正路439號" },
+{ subject:"信義 興雅里里辦公處", start:"2026-03-21 09:00", end:"2026-03-21 11:30", desc:"乳攝、子抹、腸篩、口腔", location:"台北市信義區興雅里松隆路46號" },
+{ subject:"信義 三犁里里辦", start:"2026-03-21 09:00", end:"2026-03-21 11:30", desc:"乳攝、子抹、腸篩、口腔", location:"台北市信義區三犁里信義路五段150巷14弄6號" },
+{ subject:"鶯歌 鶯歌區鳳鳴國中整篩9", start:"2026-03-22 08:30", end:"2026-03-22 11:30", desc:"乳攝、子抹、腸篩、口腔、BC、成老健", location:"新北市鶯歌區鳳鳴里永和街33號" },
+{ subject:"板橋 板橋爵士館", start:"2026-03-23 14:00", end:"2026-03-23 20:00", desc:"子抹、腸篩", location:"新北市板橋區忠翠里莊敬路75巷31號" },
+{ subject:"板橋 接雲寺", start:"2026-03-24 08:00", end:"2026-03-24 12:00", desc:"乳攝、子抹、腸篩", location:"新北市板橋區留侯里西門街69號" },
+{ subject:"林口 林口贊天宮", start:"2026-03-24 17:30", end:"2026-03-24 20:30", desc:"子抹、腸篩", location:"新北市林口區東林里自強三街28號" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-25 08:00", end:"2026-03-25 20:00", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-25 13:00", end:"2026-03-25 16:30", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"樹林 樹林衛生所", start:"2026-03-25 17:00", end:"2026-03-25 19:30", desc:"乳攝、子抹", location:"新北市樹林區保安里樹新路40之7號" },
+{ subject:"板橋 板橋板城綠地廣場", start:"2026-03-25 16:00", end:"2026-03-25 20:00", desc:"子抹、腸篩、BC", location:"新北市板橋區湳興里南雅西路一段134號" },
+{ subject:"樹林 樹林立康", start:"2026-03-26 08:30", end:"2026-03-26 11:30", desc:"乳攝、子抹", location:"新北市樹林區樹福里日新街39號" },
+{ subject:"土城 土城衛生所(小車)", start:"2026-03-26 08:00", end:"2026-03-26 12:00", desc:"乳攝", location:"新北市土城區埤塘里和平路26號" },
+{ subject:"泰山 泰山明日城天青社區", start:"2026-03-26 17:30", end:"2026-03-26 20:30", desc:"子抹、腸篩", location:"新北市泰山區義仁里信華一街33號" },
+{ subject:"土城 廣川醫院", start:"2026-03-27 17:00", end:"2026-03-27 20:00", desc:"乳攝、子抹、腸篩", location:"新北市土城區學士里裕民路276號" },
+{ subject:"萬華 萬華電影主題公園", start:"2026-03-27 15:00", end:"2026-03-27 20:00", desc:"子抹、腸篩", location:"台北市萬華區萬壽里康定路19號" },
+{ subject:"信義 景聯區民活動中心(發報告)", start:"2026-03-28 09:00", end:"2026-03-28 11:00", desc:"", location:"台北市信義區景聯里基隆路二段39巷37弄2號" },
+{ subject:"樹林 樹林惠生", start:"2026-03-28 08:30", end:"2026-03-28 11:30", desc:"乳攝、腸篩", location:"新北市樹林區圳生里保安街一段190號" },
+{ subject:"大安 合作金庫銀行建國分行", start:"2026-03-28 09:00", end:"2026-03-28 12:00", desc:"子抹、腸篩", location:"台北市大安區民炤里信義路三段77號" },
+{ subject:"蘆洲 蘆洲仁愛國小", start:"2026-03-28 15:00", end:"2026-03-28 20:00", desc:"子抹、腸篩", location:"新北市蘆洲區水湳里民族路488號" },
+{ subject:"板橋 板橋音樂公園整篩10+肺炎鏈球菌疫苗施打", start:"2026-03-29 08:30", end:"2026-03-29 11:30", desc:"乳攝、子抹、腸篩、口腔、BC、成老健", location:"板橋音樂公園" },
+{ subject:"土城 土城廣福國小(發報告)", start:"2026-03-29 09:00", end:"2026-03-29 11:00", desc:"", location:"新北市土城區廣福里學府路一段127號" },
+{ subject:"三重 三重蘆洲家樂福店", start:"2026-03-29 15:00", end:"2026-03-29 20:00", desc:"子抹、腸篩", location:"新北市三重區碧華里五華街282號" },
+{ subject:"林口 林口家樂福", start:"2026-03-31 17:30", end:"2026-03-31 20:30", desc:"子抹、腸篩", location:"新北市林口區湖南里仁愛路二段516號前" },
+      // { subject:"...", start:"2026-03-05 09:00", end:"2026-03-05 12:00", desc:"乳攝", location:"..." },
+    ];
+
+    const TAGS = [
+      { key: "乳攝", cls: "t-ms",  aliases: ["乳攝","乳房攝影","乳癌","乳癌篩檢","乳攝車"] },
+      { key: "子抹", cls: "t-pap", aliases: ["子抹","抹片","子宮頸","子宮頸抹片","抹片篩檢"] },
+      { key: "腸篩", cls: "t-fit", aliases: ["腸篩","大腸","大腸癌","糞便","fit"] },
+      { key: "BC",   cls: "t-bc",  aliases: ["bc","bc肝","b肝","c肝","肝炎","肝篩"] },
+      { key: "成老健", cls: "t-elder", aliases: ["成老健","整篩"] },
+    ];
+
+    const norm = (s) => (s ?? "").toString().trim().toLowerCase().replace(/\s+/g, " ");
+    const pad2 = (n) => String(n).padStart(2, "0");
+
+    function parseTags(desc) {
+      const d = norm(desc);
+      const out = [];
+      for (const t of TAGS) {
+        if (t.aliases.some(a => d.includes(norm(a)))) out.push(t);
+      }
+      return out;
+    }
+
+    function toDateTime(s){
+      return new Date(s.replace(" ", "T") + ":00");
+    }
+
+    function isPastEvent(ev){
+      const end = toDateTime(ev.end);
+      const now = new Date();
+      return !isNaN(end) && end.getTime() < now.getTime();
+    }
+
+    function formatTimeRange24(startStr, endStr){
+      const start = toDateTime(startStr);
+      const end   = toDateTime(endStr);
+      if (isNaN(start) || isNaN(end)) return `${startStr} ~ ${endStr}`;
+
+      const y = start.getFullYear();
+      const m = pad2(start.getMonth() + 1);
+      const d = pad2(start.getDate());
+      const sh = pad2(start.getHours()), sm = pad2(start.getMinutes());
+      const eh = pad2(end.getHours()),   em = pad2(end.getMinutes());
+
+      return `${y}/${m}/${d} ${sh}:${sm}~${eh}:${em}`;
+    }
+
+    function searchTimeTokens(ev){
+      const start = toDateTime(ev.start);
+      const end = toDateTime(ev.end);
+      if (isNaN(start) || isNaN(end)) return "";
+
+      const y = start.getFullYear();
+      const m = start.getMonth() + 1;
+      const d = start.getDate();
+
+      const sh = pad2(start.getHours()), sm = pad2(start.getMinutes());
+      const eh = pad2(end.getHours()),   em = pad2(end.getMinutes());
+
+      return [
+        `${y}/${pad2(m)}/${pad2(d)}`,
+        `${y}-${pad2(m)}-${pad2(d)}`,
+        `${m}/${d}`,
+        `${pad2(m)}/${pad2(d)}`,
+        `${sh}:${sm}`,
+        `${eh}:${em}`,
+        `${start.getHours()}`,
+        `${end.getHours()}`,
+        `${sh}${sm}`,
+        `${eh}${em}`,
+      ].join(" ");
+    }
+
+    function makeMapUrl(address){
+      return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
+    }
+
+    function sortEvents(arr){
+      return [...arr].sort((a,b)=>{
+        const ta = toDateTime(a.start).getTime();
+        const tb = toDateTime(b.start).getTime();
+        return (isNaN(ta) ? 0 : ta) - (isNaN(tb) ? 0 : tb);
+      });
+    }
+
+    // --- DOM ---
+    const qEl = document.getElementById("q");
+    const listEl = document.getElementById("list");
+    const countEl = document.getElementById("count");
+    const statusEl = document.getElementById("status");
+    const statsEl = document.getElementById("stats");
+    const clearBtn = document.getElementById("clearBtn");
+    const fltEls = Array.from(document.querySelectorAll(".flt"));
+    const showPastEl = document.getElementById("showPast");
+
+    function getSelectedTags(){
+      return fltEls.filter(x => x.checked).map(x => x.value);
+    }
+
+    // 小統計：未來 / 已結束
+    function updateStats(){
+      const past = events.filter(isPastEvent).length;
+      const future = events.length - past;
+      statsEl.textContent = `｜未來 ${future} 場 / 已結束 ${past} 場`;
+    }
+
+    function filterEvents(query, selectedTags){
+      const q = norm(query);
+      const selected = new Set(selectedTags.map(norm));
+      const showPast = showPastEl?.checked === true;
+
+      return sortEvents(events).filter(ev => {
+        // 預設不顯示已結束
+        if (!showPast && isPastEvent(ev)) return false;
+
+        const tags = parseTags(ev.desc).map(t => t.key);
+        const hasSelected = selected.size === 0 || tags.some(t => selected.has(norm(t)));
+        if (!hasSelected) return false;
+
+        if (!q) return true;
+
+        const timeTokens = searchTimeTokens(ev);
+        const hay = norm(`${ev.subject} ${ev.desc} ${ev.location} ${timeTokens}`);
+        return hay.includes(q);
+      });
+    }
+
+    function render(data, query){
+      listEl.innerHTML = "";
+      countEl.textContent = data.length;
+      statusEl.textContent = (norm(query) && data.length === 0) ? "查無資料" : "";
+
+      if (data.length === 0){
+        const div = document.createElement("div");
+        div.className = "empty";
+        div.textContent = norm(query) ? "查無資料" : "尚無活動";
+        listEl.appendChild(div);
+        return;
+      }
+
+      for (const ev of data){
+        const past = isPastEvent(ev);
+
+        const card = document.createElement("div");
+        card.className = "card";
+        if (past) card.classList.add("past");
+
+        const top = document.createElement("div");
+        top.className = "top";
+
+        const subject = document.createElement("div");
+        subject.className = "subject";
+        subject.textContent = ev.subject;
+
+        top.appendChild(subject);
+
+        if (past){
+          const badge = document.createElement("span");
+          badge.className = "past-badge";
+          badge.textContent = "已結束";
+          top.appendChild(badge);
+        }
+
+        card.appendChild(top);
+
+        const tagsWrap = document.createElement("div");
+        tagsWrap.className = "tags";
+
+        const tags = parseTags(ev.desc);
+        for (const t of tags){
+          const tag = document.createElement("span");
+          tag.className = `tag ${t.cls}`;
+          tag.textContent = `[${t.key === "BC" ? "BC肝" : t.key}]`;
+          tagsWrap.appendChild(tag);
+        }
+        card.appendChild(tagsWrap);
+
+        const time = document.createElement("div");
+        time.className = "time";
+        time.textContent = formatTimeRange24(ev.start, ev.end);
+        card.appendChild(time);
+
+        const loc = document.createElement("div");
+        loc.className = "loc";
+        loc.textContent = `地點：${ev.location}`;
+        card.appendChild(loc);
+
+        const actions = document.createElement("div");
+        actions.className = "actions";
+
+        const map = document.createElement("a");
+        map.className = "link";
+        map.href = makeMapUrl(ev.location);
+        map.target = "_blank";
+        map.rel = "noopener noreferrer";
+        map.textContent = "🗺️ map（Google 地圖）";
+
+        actions.appendChild(map);
+        card.appendChild(actions);
+
+        listEl.appendChild(card);
+      }
+    }
+
+    function update(){
+      const data = filterEvents(qEl.value, getSelectedTags());
+      render(data, qEl.value);
+    }
+
+    // events
+    qEl.addEventListener("input", update);
+    fltEls.forEach(el => el.addEventListener("change", update));
+    showPastEl.addEventListener("change", update);
+
+    clearBtn.addEventListener("click", () => {
+      qEl.value = "";
+      fltEls.forEach(el => el.checked = false);
+      showPastEl.checked = false; // 回到預設：不顯示已結束
+      qEl.focus();
+      update();
+    });
+
+    // init
+    updateStats();
+    update();
+  </script>
+</body>
+</html>
