@@ -185,231 +185,478 @@
     // org: 機構全銜
     // displayName / displayOrg：實際顯示文字，可遮罩
     const participants = [
-      { "name": "陳X恩", "org": "新北市樹林區衛生所", "displayName": "陳X恩", "displayOrg": "新北市樹林區衛生所" },
-      { "name": "陳X杰", "org": "盛軒耳鼻喉科診所", "displayName": "陳X杰", "displayOrg": "盛軒耳鼻喉科診所" },
-      { "name": "王X淇", "org": "板橋國泰醫院", "displayName": "王X淇", "displayOrg": "板橋國泰醫院" },
-      { "name": "謝X軒", "org": "新北市樹林區衛生所", "displayName": "謝X軒", "displayOrg": "新北市樹林區衛生所" },
-      { "name": "徐X琳", "org": "盛軒耳鼻喉科", "displayName": "徐X琳", "displayOrg": "盛軒耳鼻喉科" },
-      { "name": "蕭X臻", "org": "新北市樹林區衛生所", "displayName": "蕭X臻", "displayOrg": "新北市樹林區衛生所" },
-      { "name": "李X瑩", "org": "汐止國泰綜合醫院", "displayName": "李X瑩", "displayOrg": "汐止國泰綜合醫院" },
-      { "name": "林X潔", "org": "宏仁醫院", "displayName": "林X潔", "displayOrg": "宏仁醫院" },
-      { "name": "張X芳", "org": "新北市烏來區衛生所", "displayName": "張X芳", "displayOrg": "新北市烏來區衛生所" },
-      { "name": "謝X君", "org": "威力親子診所", "displayName": "謝X君", "displayOrg": "威力親子診所" },
-      { "name": "王X嫣", "org": "新北市樹林區衛生所", "displayName": "王X嫣", "displayOrg": "新北市樹林區衛生所" },
-      { "name": "陳X伃", "org": "盛軒耳鼻喉科診所", "displayName": "陳X伃", "displayOrg": "盛軒耳鼻喉科診所" },
-      { "name": "李X育", "org": "天主教輔仁大學附設醫院", "displayName": "李X育", "displayOrg": "天主教輔仁大學附設醫院" },
-      { "name": "楊X惠", "org": "新禾診所", "displayName": "楊X惠", "displayOrg": "新禾診所" },
-      { "name": "陳X妏", "org": "麗暘診所", "displayName": "陳X妏", "displayOrg": "麗暘診所" },
-      { "name": "蔡X禎", "org": "衛生福利部樂生醫院", "displayName": "蔡X禎", "displayOrg": "衛生福利部樂生醫院" },
-      { "name": "劉X偉", "org": "衛生福利部樂生醫院", "displayName": "劉X偉", "displayOrg": "衛生福利部樂生醫院" },
-      { "name": "曾X娟", "org": "新北市樹林區衛生所", "displayName": "曾X娟", "displayOrg": "新北市樹林區衛生所" },
-      { "name": "邱X浩", "org": "啟鐘耳鼻喉科診所", "displayName": "邱X浩", "displayOrg": "啟鐘耳鼻喉科診所" },
-      { "name": "陳X君", "org": "新北市石碇區衛生所", "displayName": "陳X君", "displayOrg": "新北市石碇區衛生所" },
-      { "name": "劉X婷", "org": "新北市石碇區衛生所", "displayName": "劉X婷", "displayOrg": "新北市石碇區衛生所" },
-      { "name": "王X喻", "org": "板橋中興醫院", "displayName": "王X喻", "displayOrg": "板橋中興醫院" },
-      { "name": "鄧X慈", "org": "新北市樹林區衛生所", "displayName": "鄧X慈", "displayOrg": "新北市樹林區衛生所" },
-      { "name": "施X萱", "org": "新禾診所", "displayName": "施X萱", "displayOrg": "新禾診所" },
-      { "name": "呂X穎", "org": "新北市石門區衛生所", "displayName": "呂X穎", "displayOrg": "新北市石門區衛生所" },
-      { "name": "陳X喬", "org": "新北市蘆洲區衛生所", "displayName": "陳X喬", "displayOrg": "新北市蘆洲區衛生所" },
-      { "name": "邱X瑄", "org": "新禾診所", "displayName": "邱X瑄", "displayOrg": "新禾診所" },
-      { "name": "鄧X慈", "org": "新北市林口區衛生所", "displayName": "鄧X慈", "displayOrg": "新北市林口區衛生所" },
-      { "name": "謝X芳", "org": "三重祥安診所", "displayName": "謝X芳", "displayOrg": "三重祥安診所" },
-      { "name": "張X郁", "org": "新北市石門區衛生所", "displayName": "張X郁", "displayOrg": "新北市石門區衛生所" },
-      { "name": "賴X汝", "org": "新北市石門區衞生所", "displayName": "賴X汝", "displayOrg": "新北市石門區衞生所" },
-      { "name": "高X菁", "org": "有木國民小學", "displayName": "高X菁", "displayOrg": "有木國民小學" },
-      { "name": "湯X滿", "org": "淡水馬偕醫院", "displayName": "湯X滿", "displayOrg": "淡水馬偕醫院" },
-      { "name": "魏X光", "org": "新北市三芝區衛生所", "displayName": "魏X光", "displayOrg": "新北市三芝區衛生所" },
-      { "name": "周X均", "org": "江村聯合診所", "displayName": "周X均", "displayOrg": "江村聯合診所" },
-      { "name": "黃X玲", "org": "板橋區興安診所", "displayName": "黃X玲", "displayOrg": "板橋區興安診所" },
-      { "name": "黃X珠", "org": "新北市石門區衞生所", "displayName": "黃X珠", "displayOrg": "新北市石門區衞生所" },
-      { "name": "張X民", "org": "長庚醫療財團法人林口長庚紀念醫院", "displayName": "張X民", "displayOrg": "長庚醫療財團法人林口長庚紀念醫院" },
-      { "name": "李X鴻", "org": "新禾診所", "displayName": "李X鴻", "displayOrg": "新禾診所" },
-      { "name": "陳X鈴", "org": "新北市汐止區衛生所", "displayName": "陳X鈴", "displayOrg": "新北市汐止區衛生所" },
-      { "name": "吳X玲", "org": "新北市蘆洲區衞生所", "displayName": "吳X玲", "displayOrg": "新北市蘆洲區衞生所" },
-      { "name": "林X媛", "org": "內湖國泰診所", "displayName": "林X媛", "displayOrg": "內湖國泰診所" },
-      { "name": "沈X昌", "org": "佛教慈濟醫療財團法人台北慈濟醫院", "displayName": "沈X昌", "displayOrg": "佛教慈濟醫療財團法人台北慈濟醫院" },
-      { "name": "呂X涵", "org": "衛生福利部八里療養院", "displayName": "呂X涵", "displayOrg": "衛生福利部八里療養院" },
-      { "name": "莊X安", "org": "莊志平內科診所", "displayName": "莊X安", "displayOrg": "莊志平內科診所" },
-      { "name": "丁X庭", "org": "新北市五股區衛生所", "displayName": "丁X庭", "displayOrg": "新北市五股區衛生所" },
-      { "name": "林X傑", "org": "新北市永和區衛生所", "displayName": "林X傑", "displayOrg": "新北市永和區衛生所" },
-      { "name": "鄭X青", "org": "慈德聯合診所", "displayName": "鄭X青", "displayOrg": "慈德聯合診所" },
-      { "name": "何X華", "org": "永和區衛生所", "displayName": "何X華", "displayOrg": "永和區衛生所" },
-      { "name": "張X芬", "org": "新北市永和區衛生所", "displayName": "張X芬", "displayOrg": "新北市永和區衛生所" },
-      { "name": "黃X樺", "org": "新北市永和區衛生所", "displayName": "黃X樺", "displayOrg": "新北市永和區衛生所" },
-      { "name": "黃X安", "org": "永和區衛生所", "displayName": "黃X安", "displayOrg": "永和區衛生所" },
-      { "name": "郭X宜", "org": "新北市蘆洲區衛生所", "displayName": "郭X宜", "displayOrg": "新北市蘆洲區衛生所" },
-      { "name": "李X錦", "org": "衛生福利部臺中醫院", "displayName": "李X錦", "displayOrg": "衛生福利部臺中醫院" },
-      { "name": "張XX ", "org": "康合診所", "displayName": "張XX ", "displayOrg": "康合診所" },
-      { "name": "賴X琳", "org": "石碇衛生所", "displayName": "賴X琳", "displayOrg": "石碇衛生所" },
-      { "name": "盧X安", "org": "板橋中興醫院", "displayName": "盧X安", "displayOrg": "板橋中興醫院" },
-      { "name": "王X萍", "org": "新禾診所", "displayName": "王X萍", "displayOrg": "新禾診所" },
-      { "name": "陳X倩", "org": "新北市石門區衛生所", "displayName": "陳X倩", "displayOrg": "新北市石門區衛生所" },
-      { "name": "陳X威", "org": "柳橙親子診所", "displayName": "陳X威", "displayOrg": "柳橙親子診所" },
-      { "name": "吳X甄", "org": "新北市新店區衛生所", "displayName": "吳X甄", "displayOrg": "新北市新店區衛生所" },
-      { "name": "徐X雯", "org": "興安診所", "displayName": "徐X雯", "displayOrg": "興安診所" },
-      { "name": "方X彗", "org": "新北市五股區衛生所", "displayName": "方X彗", "displayOrg": "新北市五股區衛生所" },
-      { "name": "吳X婷", "org": "國泰醫療財團法人國泰綜合醫院", "displayName": "吳X婷", "displayOrg": "國泰醫療財團法人國泰綜合醫院" },
-      { "name": "陳X萍", "org": "新北市五股區衛生所", "displayName": "陳X萍", "displayOrg": "新北市五股區衛生所" },
-      { "name": "陳X日", "org": "宏華診所", "displayName": "陳X日", "displayOrg": "宏華診所" },
-      { "name": "翁X君", "org": "新北市土城區衛生所", "displayName": "翁X君", "displayOrg": "新北市土城區衛生所" },
-      { "name": "蕭X君", "org": "新北市土城區衛生所", "displayName": "蕭X君", "displayOrg": "新北市土城區衛生所" },
-      { "name": "許X毓", "org": "三重中興醫院", "displayName": "許X毓", "displayOrg": "三重中興醫院" },
-      { "name": "趙X昭", "org": "三重中醫醫院", "displayName": "趙X昭", "displayOrg": "三重中醫醫院" },
-      { "name": "林X勳", "org": "林口辰安藥局", "displayName": "林X勳", "displayOrg": "林口辰安藥局" },
-      { "name": "林X萱", "org": "辰林診所", "displayName": "林X萱", "displayOrg": "辰林診所" },
-      { "name": "葉X瑜", "org": "新北市蘆洲區衛生所", "displayName": "葉X瑜", "displayOrg": "新北市蘆洲區衛生所" },
-      { "name": "蘇X芳", "org": "新北市板橋區衛生所", "displayName": "蘇X芳", "displayOrg": "新北市板橋區衛生所" },
-      { "name": "徐X瑜", "org": "新北市三重區衛生所", "displayName": "徐X瑜", "displayOrg": "新北市三重區衛生所" },
-      { "name": "林X寬", "org": "亞東醫院", "displayName": "林X寬", "displayOrg": "亞東醫院" },
-      { "name": "孫X喬", "org": "新北市立土城醫院（委託長庚醫療財團法人興建經營）", "displayName": "孫X喬", "displayOrg": "新北市立土城醫院（委託長庚醫療財團法人興建經營）" },
-      { "name": "雲X頤", "org": "常春聯合診所", "displayName": "雲X頤", "displayOrg": "常春聯合診所" },
-      { "name": "曾X卿", "org": "新北市鶯歌區衛生所", "displayName": "曾X卿", "displayOrg": "新北市鶯歌區衛生所" },
-      { "name": "王X暐", "org": "板橋新生堂中醫診所", "displayName": "王X暐", "displayOrg": "板橋新生堂中醫診所" },
-      { "name": "賴X倩", "org": "樹林衛生所", "displayName": "賴X倩", "displayOrg": "樹林衛生所" },
-      { "name": "曾X鳳", "org": "財團法人天主教耕莘醫院", "displayName": "曾X鳳", "displayOrg": "財團法人天主教耕莘醫院" },
-      { "name": "林X珠", "org": "沈德昌診所", "displayName": "林X珠", "displayOrg": "沈德昌診所" },
-      { "name": "楊X琼", "org": "財團法人天主教耕莘醫院", "displayName": "楊X琼", "displayOrg": "財團法人天主教耕莘醫院" },
-      { "name": "郭X芬", "org": "土城桃庚診所", "displayName": "郭X芬", "displayOrg": "土城桃庚診所" },
-      { "name": "劉X霖", "org": "新北市萬里區衛生所", "displayName": "劉X霖", "displayOrg": "新北市萬里區衛生所" },
-      { "name": "汪X建", "org": "廣祥診所", "displayName": "汪X建", "displayOrg": "廣祥診所" },
-      { "name": "陳X鄰", "org": "黃天一耳鼻喉科診所", "displayName": "陳X鄰", "displayOrg": "黃天一耳鼻喉科診所" },
-      { "name": "范X宜", "org": "新北市立土城醫院", "displayName": "范X宜", "displayOrg": "新北市立土城醫院" },
-      { "name": "張X文", "org": "天主教耕莘醫院", "displayName": "張X文", "displayOrg": "天主教耕莘醫院" },
-      { "name": "王X筑", "org": "樹林區衛生所", "displayName": "王X筑", "displayOrg": "樹林區衛生所" },
-      { "name": "林X圭", "org": "澤生診所", "displayName": "林X圭", "displayOrg": "澤生診所" },
-      { "name": "羅X榆", "org": "弘久診所", "displayName": "羅X榆", "displayOrg": "弘久診所" },
-      { "name": "戴X如", "org": "土城桃庚診所", "displayName": "戴X如", "displayOrg": "土城桃庚診所" },
-      { "name": "莊X彤", "org": "行天宮醫療志業醫療財團法人恩主公醫院", "displayName": "莊X彤", "displayOrg": "行天宮醫療志業醫療財團法人恩主公醫院" },
-      { "name": "童X麒", "org": "憲忠診所", "displayName": "童X麒", "displayOrg": "憲忠診所" },
-      { "name": "陳X仁", "org": "土城中央診所", "displayName": "陳X仁", "displayOrg": "土城中央診所" },
-      { "name": "彭X祐", "org": "川岳中醫診所", "displayName": "彭X祐", "displayOrg": "川岳中醫診所" },
-      { "name": "張X婷", "org": "新北市金山區衛生所", "displayName": "張X婷", "displayOrg": "新北市金山區衛生所" },
-      { "name": "梁X伶", "org": "鴻恩診所", "displayName": "梁X伶", "displayOrg": "鴻恩診所" },
-      { "name": "嚴X瑄", "org": "衛生福利部立豐原醫院", "displayName": "嚴X瑄", "displayOrg": "衛生福利部立豐原醫院" },
-      { "name": "陳X雪", "org": "山林診所", "displayName": "陳X雪", "displayOrg": "山林診所" },
-      { "name": "馬X元", "org": "醫療財團法人徐元智先生醫藥基金會亞東紀念醫院", "displayName": "馬X元", "displayOrg": "醫療財團法人徐元智先生醫藥基金會亞東紀念醫院" },
-      { "name": "陳X芬", "org": "中心綜合醫院", "displayName": "陳X芬", "displayOrg": "中心綜合醫院" },
-      { "name": "李X芳", "org": "新北市三重區衛生所", "displayName": "李X芳", "displayOrg": "新北市三重區衛生所" },
-      { "name": "許X怡", "org": "新北仁康醫院", "displayName": "許X怡", "displayOrg": "新北仁康醫院" },
-      { "name": "丁X月", "org": "輔大醫院", "displayName": "丁X月", "displayOrg": "輔大醫院" },
-      { "name": "尹X新", "org": "德美診所", "displayName": "尹X新", "displayOrg": "德美診所" },
-      { "name": "呂X瑩", "org": "仁愛醫院", "displayName": "呂X瑩", "displayOrg": "仁愛醫院" },
-      { "name": "黃X穎", "org": "臺北醫學大學附設醫院", "displayName": "黃X穎", "displayOrg": "臺北醫學大學附設醫院" },
-      { "name": "顏X珊", "org": "板橋區衛生所", "displayName": "顏X珊", "displayOrg": "板橋區衛生所" },
-      { "name": "吳X姍", "org": "新北市板橋區衛生所", "displayName": "吳X姍", "displayOrg": "新北市板橋區衛生所" },
-      { "name": "何X婷", "org": "新北市板橋區衛生所", "displayName": "何X婷", "displayOrg": "新北市板橋區衛生所" },
-      { "name": "郝X嘉", "org": "新北市板橋區衛生所", "displayName": "郝X嘉", "displayOrg": "新北市板橋區衛生所" },
-      { "name": "詹X婷", "org": "德河聯合診所", "displayName": "詹X婷", "displayOrg": "德河聯合診所" },
-      { "name": "陳X伶", "org": "", "displayName": "陳X伶", "displayOrg": "" },
-      { "name": "蘇X超", "org": "三峽區彭武正耳鼻喉科", "displayName": "蘇X超", "displayOrg": "三峽區彭武正耳鼻喉科" },
-      { "name": "邱X治", "org": "品元診所", "displayName": "邱X治", "displayOrg": "品元診所" },
-      { "name": "趙X琪", "org": "瑞生診所", "displayName": "趙X琪", "displayOrg": "瑞生診所" },
-      { "name": "郭X心", "org": "新北市板橋區衛生所", "displayName": "郭X心", "displayOrg": "新北市板橋區衛生所" },
-      { "name": "黃X文", "org": "恩主公醫院", "displayName": "黃X文", "displayOrg": "恩主公醫院" },
-      { "name": "黃X瑜", "org": "長庚醫療財團法人林口長庚紀念醫院", "displayName": "黃X瑜", "displayOrg": "長庚醫療財團法人林口長庚紀念醫院" },
-      { "name": "呂X鈞", "org": "廣詮診所", "displayName": "呂X鈞", "displayOrg": "廣詮診所" },
-      { "name": "張X甄", "org": "仁濟醫院", "displayName": "張X甄", "displayOrg": "仁濟醫院" },
-      { "name": "王X婷", "org": "辰林診所", "displayName": "王X婷", "displayOrg": "辰林診所" },
-      { "name": "凃X芬", "org": "聯安診所", "displayName": "凃X芬", "displayOrg": "聯安診所" },
-      { "name": "洪X鈺", "org": "亞東紀念醫院", "displayName": "洪X鈺", "displayOrg": "亞東紀念醫院" },
-      { "name": "張X昭", "org": "亞東紀念醫院", "displayName": "張X昭", "displayOrg": "亞東紀念醫院" },
-      { "name": "張X瑜", "org": "亞東紀念醫院", "displayName": "張X瑜", "displayOrg": "亞東紀念醫院" },
-      { "name": "林X美", "org": "新北市泰山區衛生所", "displayName": "林X美", "displayOrg": "新北市泰山區衛生所" },
-      { "name": "黃X芬", "org": "泰山區衛生所", "displayName": "黃X芬", "displayOrg": "泰山區衛生所" },
-      { "name": "劉X宏", "org": "健康芬宏國際有限公司 / 負責人 ", "displayName": "劉X宏", "displayOrg": "健康芬宏國際有限公司 / 負責人 " },
-      { "name": "施X欣", "org": "", "displayName": "施X欣", "displayOrg": "" },
-      { "name": "林X俊", "org": "廣詮診所", "displayName": "林X俊", "displayOrg": "廣詮診所" },
-      { "name": "李X君", "org": "新北市土城區衛生所", "displayName": "李X君", "displayOrg": "新北市土城區衛生所" },
-      { "name": "蘇X稜", "org": "新北市土城區衛生所", "displayName": "蘇X稜", "displayOrg": "新北市土城區衛生所" },
-      { "name": "李X涵", "org": "亞東紀念醫院", "displayName": "李X涵", "displayOrg": "亞東紀念醫院" },
-      { "name": "吳X維", "org": "山木耳鼻喉科診所", "displayName": "吳X維", "displayOrg": "山木耳鼻喉科診所" },
-      { "name": "林X君", "org": "醫療財團法人徐元智先生醫藥基金會亞東紀念醫院", "displayName": "林X君", "displayOrg": "醫療財團法人徐元智先生醫藥基金會亞東紀念醫院" },
-      { "name": "鄧X岑", "org": "板聯診所", "displayName": "鄧X岑", "displayOrg": "板聯診所" },
-      { "name": "江X雯", "org": "瑞東診所", "displayName": "江X雯", "displayOrg": "瑞東診所" },
-      { "name": "李X謓", "org": "美商亞培股份有限公司", "displayName": "李X謓", "displayOrg": "美商亞培股份有限公司" },
-      { "name": "張X毓", "org": "土城區土城衛生所", "displayName": "張X毓", "displayOrg": "土城區土城衛生所" },
-      { "name": "溫X欣", "org": "部立雙和醫院", "displayName": "溫X欣", "displayOrg": "部立雙和醫院" },
-      { "name": "陳X蒼", "org": "佳佳藥局", "displayName": "陳X蒼", "displayOrg": "佳佳藥局" },
-      { "name": "鄧X欣", "org": "愛爾麗診所", "displayName": "鄧X欣", "displayOrg": "愛爾麗診所" },
-      { "name": "林X蓁", "org": "健成藥局", "displayName": "林X蓁", "displayOrg": "健成藥局" },
-      { "name": "莊X嘉", "org": "新仁醫療社團法人新仁醫院", "displayName": "莊X嘉", "displayOrg": "新仁醫療社團法人新仁醫院" },
-      { "name": "張X如", "org": "新北市蘆洲區衛生所", "displayName": "張X如", "displayOrg": "新北市蘆洲區衛生所" },
-      { "name": "施X妮", "org": "新北巿土城區衛生所", "displayName": "施X妮", "displayOrg": "新北巿土城區衛生所" },
-      { "name": "謝X琛", "org": "新北市板橋區衛生所", "displayName": "謝X琛", "displayOrg": "新北市板橋區衛生所" },
-      { "name": "廖X惠", "org": "馬偕醫院", "displayName": "廖X惠", "displayOrg": "馬偕醫院" },
-      { "name": "李X惠", "org": "新北市五股區衛生所", "displayName": "李X惠", "displayOrg": "新北市五股區衛生所" },
-      { "name": "高X怡", "org": "新北市八里區衛生所", "displayName": "高X怡", "displayOrg": "新北市八里區衛生所" },
-      { "name": "李X宜", "org": "新北市坪林區衛生所", "displayName": "李X宜", "displayOrg": "新北市坪林區衛生所" },
-      { "name": "莊X惠", "org": "仁謙診所", "displayName": "莊X惠", "displayOrg": "仁謙診所" },
-      { "name": "許X壬", "org": "和安診所", "displayName": "許X壬", "displayOrg": "和安診所" },
-      { "name": "林X懷", "org": "行天宮醫療志業醫療財法人恩主公醫院", "displayName": "林X懷", "displayOrg": "行天宮醫療志業醫療財法人恩主公醫院" },
-      { "name": "鄭X芯", "org": "亞東紀念醫院", "displayName": "鄭X芯", "displayOrg": "亞東紀念醫院" },
-      { "name": "趙X君", "org": "新北市新店區衛生所", "displayName": "趙X君", "displayOrg": "新北市新店區衛生所" },
-      { "name": "白X妮", "org": "台北市立關渡醫院", "displayName": "白X妮", "displayOrg": "台北市立關渡醫院" },
-      { "name": "蔡X筠", "org": "宏彥親子耳鼻喉科診所", "displayName": "蔡X筠", "displayOrg": "宏彥親子耳鼻喉科診所" },
-      { "name": "楊XX婷", "org": "", "displayName": "楊XX婷", "displayOrg": "" },
-      { "name": "林X華", "org": "台北長庚", "displayName": "林X華", "displayOrg": "台北長庚" },
-      { "name": "溫X玲", "org": "新北市五股區衛生所", "displayName": "溫X玲", "displayOrg": "新北市五股區衛生所" },
-      { "name": "許X慧", "org": "新北市三峽區衛生所", "displayName": "許X慧", "displayOrg": "新北市三峽區衛生所" },
-      { "name": "范X婷", "org": "新北市三峽區衛生所", "displayName": "范X婷", "displayOrg": "新北市三峽區衛生所" },
-      { "name": "李X曄", "org": "常青樹股份有限公司附設台北市私立常青樹社區長照機構", "displayName": "李X曄", "displayOrg": "常青樹股份有限公司附設台北市私立常青樹社區長照機構" },
-      { "name": "呂X真", "org": "亞東紀念醫院", "displayName": "呂X真", "displayOrg": "亞東紀念醫院" },
-      { "name": "沈X君", "org": "鴻安蔘藥行", "displayName": "沈X君", "displayOrg": "鴻安蔘藥行" },
-      { "name": "張X中", "org": "北醫附醫", "displayName": "張X中", "displayOrg": "北醫附醫" },
-      { "name": "許X城", "org": "亞東紀念醫院", "displayName": "許X城", "displayOrg": "亞東紀念醫院" },
-      { "name": "吳X雯", "org": "亞東紀念醫院", "displayName": "吳X雯", "displayOrg": "亞東紀念醫院" },
-      { "name": "張X耀", "org": "亞東紀念醫院", "displayName": "張X耀", "displayOrg": "亞東紀念醫院" },
-      { "name": "辛X宗", "org": "亞東紀念醫院", "displayName": "辛X宗", "displayOrg": "亞東紀念醫院" },
-      { "name": "李X霖", "org": "亞東紀念醫院", "displayName": "李X霖", "displayOrg": "亞東紀念醫院" },
-      { "name": "羅X榮", "org": "亞東紀念醫院", "displayName": "羅X榮", "displayOrg": "亞東紀念醫院" },
-      { "name": "廖X智", "org": "亞東紀念醫院", "displayName": "廖X智", "displayOrg": "亞東紀念醫院" },
-      { "name": "李X先", "org": "亞東紀念醫院", "displayName": "李X先", "displayOrg": "亞東紀念醫院" },
-      { "name": "杜X明", "org": "亞東紀念醫院", "displayName": "杜X明", "displayOrg": "亞東紀念醫院" },
-      { "name": "陳X淇", "org": "亞東紀念醫院", "displayName": "陳X淇", "displayOrg": "亞東紀念醫院" },
-      { "name": "莊X博", "org": "亞東紀念醫院", "displayName": "莊X博", "displayOrg": "亞東紀念醫院" },
-      { "name": "張X業", "org": "亞東紀念醫院", "displayName": "張X業", "displayOrg": "亞東紀念醫院" },
-      { "name": "黃X正", "org": "亞東紀念醫院", "displayName": "黃X正", "displayOrg": "亞東紀念醫院" },
-      { "name": "黃X惠", "org": "亞東紀念醫院", "displayName": "黃X惠", "displayOrg": "亞東紀念醫院" },
-      { "name": "蔡X元", "org": "亞東紀念醫院", "displayName": "蔡X元", "displayOrg": "亞東紀念醫院" },
-      { "name": "陳X慶", "org": "亞東紀念醫院", "displayName": "陳X慶", "displayOrg": "亞東紀念醫院" },
-      { "name": "林X旭", "org": "亞東紀念醫院", "displayName": "林X旭", "displayOrg": "亞東紀念醫院" },
-      { "name": "曾X憲", "org": "亞東紀念醫院", "displayName": "曾X憲", "displayOrg": "亞東紀念醫院" },
-      { "name": "邱X偉", "org": "亞東紀念醫院", "displayName": "邱X偉", "displayOrg": "亞東紀念醫院" },
-      { "name": "王X榮", "org": "77281341", "displayName": "王X榮", "displayOrg": "77281341" },
-      { "name": "張X婷", "org": "亞東紀念醫院", "displayName": "張X婷", "displayOrg": "亞東紀念醫院" },
-      { "name": "簡X恩", "org": "亞東紀念醫院", "displayName": "簡X恩", "displayOrg": "亞東紀念醫院" },
-      { "name": "陳X琪", "org": "亞東紀念醫院", "displayName": "陳X琪", "displayOrg": "亞東紀念醫院" },
-      { "name": "陳X珮", "org": "亞東紀念醫院", "displayName": "陳X珮", "displayOrg": "亞東紀念醫院" },
-      { "name": "張X蘭", "org": "亞東紀念醫院", "displayName": "張X蘭", "displayOrg": "亞東紀念醫院" },
-      { "name": "謝X謙", "org": "亞東紀念醫院", "displayName": "謝X謙", "displayOrg": "亞東紀念醫院" },
-      { "name": "趙X茹", "org": "亞東紀念醫院", "displayName": "趙X茹", "displayOrg": "亞東紀念醫院" },
-      { "name": "郭X彰", "org": "亞東紀念醫院", "displayName": "郭X彰", "displayOrg": "亞東紀念醫院" },
-      { "name": "葉X婷", "org": "亞東紀念醫院", "displayName": "葉X婷", "displayOrg": "亞東紀念醫院" },
-      { "name": "李X宇", "org": "亞東紀念醫院", "displayName": "李X宇", "displayOrg": "亞東紀念醫院" },
-      { "name": "張X煥", "org": "亞東紀念醫院", "displayName": "張X煥", "displayOrg": "亞東紀念醫院" },
-      { "name": "賴X萍", "org": "亞東紀念醫院", "displayName": "賴X萍", "displayOrg": "亞東紀念醫院" },
-      { "name": "施X婷", "org": "亞東紀念醫院", "displayName": "施X婷", "displayOrg": "亞東紀念醫院" },
-      { "name": "陳X芬", "org": "亞東紀念醫院", "displayName": "陳X芬", "displayOrg": "亞東紀念醫院" },
-      { "name": "李X涵", "org": "亞東紀念醫院", "displayName": "李X涵", "displayOrg": "亞東紀念醫院" },
-      { "name": "羅X融", "org": "亞東紀念醫院", "displayName": "羅X融", "displayOrg": "亞東紀念醫院" },
-      { "name": "林蓉", "org": "亞東紀念醫院", "displayName": "林蓉", "displayOrg": "亞東紀念醫院" },
-      { "name": "黃X煒", "org": "亞東紀念醫院", "displayName": "黃X煒", "displayOrg": "亞東紀念醫院" },
-      { "name": "江X影", "org": "亞東紀念醫院", "displayName": "江X影", "displayOrg": "亞東紀念醫院" },
-      { "name": "陳X秀", "org": "亞東紀念醫院", "displayName": "陳X秀", "displayOrg": "亞東紀念醫院" },
-      { "name": "盧X尉", "org": "亞東紀念醫院", "displayName": "盧X尉", "displayOrg": "亞東紀念醫院" },
-      { "name": "邱X華", "org": "亞東紀念醫院", "displayName": "邱X華", "displayOrg": "亞東紀念醫院" },
-      { "name": "黃X翔", "org": "亞東紀念醫院", "displayName": "黃X翔", "displayOrg": "亞東紀念醫院" },
-      { "name": "賴X賢", "org": "亞東紀念醫院", "displayName": "賴X賢", "displayOrg": "亞東紀念醫院" },
-      { "name": "郭X庭", "org": "亞東紀念醫院", "displayName": "郭X庭", "displayOrg": "亞東紀念醫院" },
-      { "name": "徐X佑", "org": "亞東紀念醫院", "displayName": "徐X佑", "displayOrg": "亞東紀念醫院" },
-      { "name": "唐X威", "org": "亞東紀念醫院", "displayName": "唐X威", "displayOrg": "亞東紀念醫院" },
-      { "name": "高X宏", "org": "亞東紀念醫院", "displayName": "高X宏", "displayOrg": "亞東紀念醫院" },
-      { "name": "古X揚", "org": "亞東紀念醫院", "displayName": "古X揚", "displayOrg": "亞東紀念醫院" },
-      { "name": "張X瑜", "org": "亞東紀念醫院", "displayName": "張X瑜", "displayOrg": "亞東紀念醫院" },
-      { "name": "吳X瑀", "org": "亞東紀念醫院", "displayName": "吳X瑀", "displayOrg": "亞東紀念醫院" },
-      { "name": "陳X郎", "org": "亞東紀念醫院", "displayName": "陳X郎", "displayOrg": "亞東紀念醫院" },
-      { "name": "陳X宏", "org": "亞東紀念醫院", "displayName": "陳X宏", "displayOrg": "亞東紀念醫院" },
-      { "name": "宋X璇", "org": "亞東紀念醫院", "displayName": "宋X璇", "displayOrg": "亞東紀念醫院" },
+      "{
+name:""陳X恩"", org:""新北市樹林區衛生所"", displayName:""陳X恩"", displayOrg:""新北市樹林區衛生所"" },"
+"{
+name:""陳X杰"", org:""盛軒耳鼻喉科診所"", displayName:""陳X杰"", displayOrg:""盛軒耳鼻喉科診所"" },"
+"{
+name:""王X淇"", org:""板橋國泰醫院"", displayName:""王X淇"", displayOrg:""板橋國泰醫院"" },"
+"{
+name:""謝X軒"", org:""新北市樹林區衛生所"", displayName:""謝X軒"", displayOrg:""新北市樹林區衛生所"" },"
+"{
+name:""徐X琳"", org:""盛軒耳鼻喉科"", displayName:""徐X琳"", displayOrg:""盛軒耳鼻喉科"" },"
+"{
+name:""蕭X臻"", org:""新北市樹林區衛生所"", displayName:""蕭X臻"", displayOrg:""新北市樹林區衛生所"" },"
+"{
+name:""李X瑩"", org:""汐止國泰綜合醫院"", displayName:""李X瑩"", displayOrg:""汐止國泰綜合醫院"" },"
+"{
+name:""林X潔"", org:""宏仁醫院"", displayName:""林X潔"", displayOrg:""宏仁醫院"" },"
+"{
+name:""張X芳"", org:""新北市烏來區衛生所"", displayName:""張X芳"", displayOrg:""新北市烏來區衛生所"" },"
+"{
+name:""謝X君"", org:""威力親子診所"", displayName:""謝X君"", displayOrg:""威力親子診所"" },"
+"{
+name:""王X嫣"", org:""新北市樹林區衛生所"", displayName:""王X嫣"", displayOrg:""新北市樹林區衛生所"" },"
+"{
+name:""陳X伃"", org:""盛軒耳鼻喉科診所"", displayName:""陳X伃"", displayOrg:""盛軒耳鼻喉科診所"" },"
+"{
+name:""李X育"", org:""天主教輔仁大學附設醫院"", displayName:""李X育"", displayOrg:""天主教輔仁大學附設醫院"" },"
+"{
+name:""楊X惠"", org:""新禾診所"", displayName:""楊X惠"", displayOrg:""新禾診所"" },"
+"{
+name:""陳X妏"", org:""麗暘診所"", displayName:""陳X妏"", displayOrg:""麗暘診所"" },"
+"{
+name:""蔡X禎"", org:""衛生福利部樂生醫院"", displayName:""蔡X禎"", displayOrg:""衛生福利部樂生醫院"" },"
+"{
+name:""劉X偉"", org:""衛生福利部樂生醫院"", displayName:""劉X偉"", displayOrg:""衛生福利部樂生醫院"" },"
+"{
+name:""曾X娟"", org:""新北市樹林區衛生所"", displayName:""曾X娟"", displayOrg:""新北市樹林區衛生所"" },"
+"{
+name:""邱X浩"", org:""啟鐘耳鼻喉科診所"", displayName:""邱X浩"", displayOrg:""啟鐘耳鼻喉科診所"" },"
+"{
+name:""陳X君"", org:""新北市石碇區衛生所"", displayName:""陳X君"", displayOrg:""新北市石碇區衛生所"" },"
+"{
+name:""劉X婷"", org:""新北市石碇區衛生所"", displayName:""劉X婷"", displayOrg:""新北市石碇區衛生所"" },"
+"{
+name:""王X喻"", org:""板橋中興醫院"", displayName:""王X喻"", displayOrg:""板橋中興醫院"" },"
+"{
+name:""鄧X慈"", org:""新北市樹林區衛生所"", displayName:""鄧X慈"", displayOrg:""新北市樹林區衛生所"" },"
+"{
+name:""施X萱"", org:""新禾診所"", displayName:""施X萱"", displayOrg:""新禾診所"" },"
+"{
+name:""呂X穎"", org:""新北市石門區衛生所"", displayName:""呂X穎"", displayOrg:""新北市石門區衛生所"" },"
+"{
+name:""陳X喬"", org:""新北市蘆洲區衛生所"", displayName:""陳X喬"", displayOrg:""新北市蘆洲區衛生所"" },"
+"{
+name:""邱X瑄"", org:""新禾診所"", displayName:""邱X瑄"", displayOrg:""新禾診所"" },"
+"{
+name:""鄧X慈"", org:""新北市林口區衛生所"", displayName:""鄧X慈"", displayOrg:""新北市林口區衛生所"" },"
+"{
+name:""謝X芳"", org:""三重祥安診所"", displayName:""謝X芳"", displayOrg:""三重祥安診所"" },"
+"{
+name:""張X郁"", org:""新北市石門區衛生所"", displayName:""張X郁"", displayOrg:""新北市石門區衛生所"" },"
+"{
+name:""賴X汝"", org:""新北市石門區衞生所"", displayName:""賴X汝"", displayOrg:""新北市石門區衞生所"" },"
+"{
+name:""高X菁"", org:""有木國民小學"", displayName:""高X菁"", displayOrg:""有木國民小學"" },"
+"{
+name:""湯X滿"", org:""淡水馬偕醫院"", displayName:""湯X滿"", displayOrg:""淡水馬偕醫院"" },"
+"{
+name:""魏X光"", org:""新北市三芝區衛生所"", displayName:""魏X光"", displayOrg:""新北市三芝區衛生所"" },"
+"{
+name:""周X均"", org:""江村聯合診所"", displayName:""周X均"", displayOrg:""江村聯合診所"" },"
+"{
+name:""黃X玲"", org:""板橋區興安診所"", displayName:""黃X玲"", displayOrg:""板橋區興安診所"" },"
+"{
+name:""黃X珠"", org:""新北市石門區衞生所"", displayName:""黃X珠"", displayOrg:""新北市石門區衞生所"" },"
+"{
+name:""張X民"", org:""長庚醫療財團法人林口長庚紀念醫院"", displayName:""張X民"", displayOrg:""長庚醫療財團法人林口長庚紀念醫院"" },"
+"{
+name:""李X鴻"", org:""新禾診所"", displayName:""李X鴻"", displayOrg:""新禾診所"" },"
+"{
+name:""陳X鈴"", org:""新北市汐止區衛生所"", displayName:""陳X鈴"", displayOrg:""新北市汐止區衛生所"" },"
+"{
+name:""吳X玲"", org:""新北市蘆洲區衞生所"", displayName:""吳X玲"", displayOrg:""新北市蘆洲區衞生所"" },"
+"{
+name:""林X媛"", org:""內湖國泰診所"", displayName:""林X媛"", displayOrg:""內湖國泰診所"" },"
+"{
+name:""沈X昌"", org:""佛教慈濟醫療財團法人台北慈濟醫院"", displayName:""沈X昌"", displayOrg:""佛教慈濟醫療財團法人台北慈濟醫院"" },"
+"{
+name:""呂X涵"", org:""衛生福利部八里療養院"", displayName:""呂X涵"", displayOrg:""衛生福利部八里療養院"" },"
+"{
+name:""莊X安"", org:""莊志平內科診所"", displayName:""莊X安"", displayOrg:""莊志平內科診所"" },"
+"{
+name:""丁X庭"", org:""新北市五股區衛生所"", displayName:""丁X庭"", displayOrg:""新北市五股區衛生所"" },"
+"{
+name:""林X傑"", org:""新北市永和區衛生所"", displayName:""林X傑"", displayOrg:""新北市永和區衛生所"" },"
+"{
+name:""鄭X青"", org:""慈德聯合診所"", displayName:""鄭X青"", displayOrg:""慈德聯合診所"" },"
+"{
+name:""何X華"", org:""永和區衛生所"", displayName:""何X華"", displayOrg:""永和區衛生所"" },"
+"{
+name:""張X芬"", org:""新北市永和區衛生所"", displayName:""張X芬"", displayOrg:""新北市永和區衛生所"" },"
+"{
+name:""黃X樺"", org:""新北市永和區衛生所"", displayName:""黃X樺"", displayOrg:""新北市永和區衛生所"" },"
+"{
+name:""黃X安"", org:""永和區衛生所"", displayName:""黃X安"", displayOrg:""永和區衛生所"" },"
+"{
+name:""郭X宜"", org:""新北市蘆洲區衛生所"", displayName:""郭X宜"", displayOrg:""新北市蘆洲區衛生所"" },"
+"{
+name:""李X錦"", org:""衛生福利部臺中醫院"", displayName:""李X錦"", displayOrg:""衛生福利部臺中醫院"" },"
+"{
+name:""張XX "", org:""康合診所"", displayName:""張XX "", displayOrg:""康合診所"" },"
+"{
+name:""賴X琳"", org:""石碇衛生所"", displayName:""賴X琳"", displayOrg:""石碇衛生所"" },"
+"{
+name:""盧X安"", org:""板橋中興醫院"", displayName:""盧X安"", displayOrg:""板橋中興醫院"" },"
+"{
+name:""王X萍"", org:""新禾診所"", displayName:""王X萍"", displayOrg:""新禾診所"" },"
+"{
+name:""陳X倩"", org:""新北市石門區衛生所"", displayName:""陳X倩"", displayOrg:""新北市石門區衛生所"" },"
+"{
+name:""陳X威"", org:""柳橙親子診所"", displayName:""陳X威"", displayOrg:""柳橙親子診所"" },"
+"{
+name:""吳X甄"", org:""新北市新店區衛生所"", displayName:""吳X甄"", displayOrg:""新北市新店區衛生所"" },"
+"{
+name:""徐X雯"", org:""興安診所"", displayName:""徐X雯"", displayOrg:""興安診所"" },"
+"{
+name:""方X彗"", org:""新北市五股區衛生所"", displayName:""方X彗"", displayOrg:""新北市五股區衛生所"" },"
+"{
+name:""吳X婷"", org:""國泰醫療財團法人國泰綜合醫院"", displayName:""吳X婷"", displayOrg:""國泰醫療財團法人國泰綜合醫院"" },"
+"{
+name:""陳X萍"", org:""新北市五股區衛生所"", displayName:""陳X萍"", displayOrg:""新北市五股區衛生所"" },"
+"{
+name:""陳X日"", org:""宏華診所"", displayName:""陳X日"", displayOrg:""宏華診所"" },"
+"{
+name:""翁X君"", org:""新北市土城區衛生所"", displayName:""翁X君"", displayOrg:""新北市土城區衛生所"" },"
+"{
+name:""蕭X君"", org:""新北市土城區衛生所"", displayName:""蕭X君"", displayOrg:""新北市土城區衛生所"" },"
+"{
+name:""許X毓"", org:""三重中興醫院"", displayName:""許X毓"", displayOrg:""三重中興醫院"" },"
+"{
+name:""趙X昭"", org:""三重中醫醫院"", displayName:""趙X昭"", displayOrg:""三重中醫醫院"" },"
+"{
+name:""林X勳"", org:""林口辰安藥局"", displayName:""林X勳"", displayOrg:""林口辰安藥局"" },"
+"{
+name:""林X萱"", org:""辰林診所"", displayName:""林X萱"", displayOrg:""辰林診所"" },"
+"{
+name:""葉X瑜"", org:""新北市蘆洲區衛生所"", displayName:""葉X瑜"", displayOrg:""新北市蘆洲區衛生所"" },"
+"{
+name:""蘇X芳"", org:""新北市板橋區衛生所"", displayName:""蘇X芳"", displayOrg:""新北市板橋區衛生所"" },"
+"{
+name:""徐X瑜"", org:""新北市三重區衛生所"", displayName:""徐X瑜"", displayOrg:""新北市三重區衛生所"" },"
+"{
+name:""林X寬"", org:""亞東醫院"", displayName:""林X寬"", displayOrg:""亞東醫院"" },"
+"{
+name:""孫X喬"", org:""新北市立土城醫院（委託長庚醫療財團法人興建經營）"", displayName:""孫X喬"", displayOrg:""新北市立土城醫院（委託長庚醫療財團法人興建經營）"" },"
+"{
+name:""雲X頤"", org:""常春聯合診所"", displayName:""雲X頤"", displayOrg:""常春聯合診所"" },"
+"{
+name:""曾X卿"", org:""新北市鶯歌區衛生所"", displayName:""曾X卿"", displayOrg:""新北市鶯歌區衛生所"" },"
+"{
+name:""王X暐"", org:""板橋新生堂中醫診所"", displayName:""王X暐"", displayOrg:""板橋新生堂中醫診所"" },"
+"{
+name:""賴X倩"", org:""樹林衛生所"", displayName:""賴X倩"", displayOrg:""樹林衛生所"" },"
+"{
+name:""曾X鳳"", org:""財團法人天主教耕莘醫院"", displayName:""曾X鳳"", displayOrg:""財團法人天主教耕莘醫院"" },"
+"{
+name:""林X珠"", org:""沈德昌診所"", displayName:""林X珠"", displayOrg:""沈德昌診所"" },"
+"{
+name:""楊X琼"", org:""財團法人天主教耕莘醫院"", displayName:""楊X琼"", displayOrg:""財團法人天主教耕莘醫院"" },"
+"{
+name:""郭X芬"", org:""土城桃庚診所"", displayName:""郭X芬"", displayOrg:""土城桃庚診所"" },"
+"{
+name:""劉X霖"", org:""新北市萬里區衛生所"", displayName:""劉X霖"", displayOrg:""新北市萬里區衛生所"" },"
+"{
+name:""汪X建"", org:""廣祥診所"", displayName:""汪X建"", displayOrg:""廣祥診所"" },"
+"{
+name:""陳X鄰"", org:""黃天一耳鼻喉科診所"", displayName:""陳X鄰"", displayOrg:""黃天一耳鼻喉科診所"" },"
+"{
+name:""范X宜"", org:""新北市立土城醫院"", displayName:""范X宜"", displayOrg:""新北市立土城醫院"" },"
+"{
+name:""張X文"", org:""天主教耕莘醫院"", displayName:""張X文"", displayOrg:""天主教耕莘醫院"" },"
+"{
+name:""王X筑"", org:""樹林區衛生所"", displayName:""王X筑"", displayOrg:""樹林區衛生所"" },"
+"{
+name:""林X圭"", org:""澤生診所"", displayName:""林X圭"", displayOrg:""澤生診所"" },"
+"{
+name:""羅X榆"", org:""弘久診所"", displayName:""羅X榆"", displayOrg:""弘久診所"" },"
+"{
+name:""戴X如"", org:""土城桃庚診所"", displayName:""戴X如"", displayOrg:""土城桃庚診所"" },"
+"{
+name:""莊X彤"", org:""行天宮醫療志業醫療財團法人恩主公醫院"", displayName:""莊X彤"", displayOrg:""行天宮醫療志業醫療財團法人恩主公醫院"" },"
+"{
+name:""童X麒"", org:""憲忠診所"", displayName:""童X麒"", displayOrg:""憲忠診所"" },"
+"{
+name:""陳X仁"", org:""土城中央診所"", displayName:""陳X仁"", displayOrg:""土城中央診所"" },"
+"{
+name:""彭X祐"", org:""川岳中醫診所"", displayName:""彭X祐"", displayOrg:""川岳中醫診所"" },"
+"{
+name:""張X婷"", org:""新北市金山區衛生所"", displayName:""張X婷"", displayOrg:""新北市金山區衛生所"" },"
+"{
+name:""梁X伶"", org:""鴻恩診所"", displayName:""梁X伶"", displayOrg:""鴻恩診所"" },"
+"{
+name:""嚴X瑄"", org:""衛生福利部立豐原醫院"", displayName:""嚴X瑄"", displayOrg:""衛生福利部立豐原醫院"" },"
+"{
+name:""陳X雪"", org:""山林診所"", displayName:""陳X雪"", displayOrg:""山林診所"" },"
+"{
+name:""馬X元"", org:""醫療財團法人徐元智先生醫藥基金會亞東紀念醫院"", displayName:""馬X元"", displayOrg:""醫療財團法人徐元智先生醫藥基金會亞東紀念醫院"" },"
+"{
+name:""陳X芬"", org:""中心綜合醫院"", displayName:""陳X芬"", displayOrg:""中心綜合醫院"" },"
+"{
+name:""李X芳"", org:""新北市三重區衛生所"", displayName:""李X芳"", displayOrg:""新北市三重區衛生所"" },"
+"{
+name:""許X怡"", org:""新北仁康醫院"", displayName:""許X怡"", displayOrg:""新北仁康醫院"" },"
+"{
+name:""丁X月"", org:""輔大醫院"", displayName:""丁X月"", displayOrg:""輔大醫院"" },"
+"{
+name:""尹X新"", org:""德美診所"", displayName:""尹X新"", displayOrg:""德美診所"" },"
+"{
+name:""呂X瑩"", org:""仁愛醫院"", displayName:""呂X瑩"", displayOrg:""仁愛醫院"" },"
+"{
+name:""黃X穎"", org:""臺北醫學大學附設醫院"", displayName:""黃X穎"", displayOrg:""臺北醫學大學附設醫院"" },"
+"{
+name:""顏X珊"", org:""板橋區衛生所"", displayName:""顏X珊"", displayOrg:""板橋區衛生所"" },"
+"{
+name:""吳X姍"", org:""新北市板橋區衛生所"", displayName:""吳X姍"", displayOrg:""新北市板橋區衛生所"" },"
+"{
+name:""何X婷"", org:""新北市板橋區衛生所"", displayName:""何X婷"", displayOrg:""新北市板橋區衛生所"" },"
+"{
+name:""郝X嘉"", org:""新北市板橋區衛生所"", displayName:""郝X嘉"", displayOrg:""新北市板橋區衛生所"" },"
+"{
+name:""詹X婷"", org:""德河聯合診所"", displayName:""詹X婷"", displayOrg:""德河聯合診所"" },"
+"{
+name:""陳X伶"", org:"""", displayName:""陳X伶"", displayOrg:"""" },"
+"{
+name:""蘇X超"", org:""三峽區彭武正耳鼻喉科"", displayName:""蘇X超"", displayOrg:""三峽區彭武正耳鼻喉科"" },"
+"{
+name:""邱X治"", org:""品元診所"", displayName:""邱X治"", displayOrg:""品元診所"" },"
+"{
+name:""趙X琪"", org:""瑞生診所"", displayName:""趙X琪"", displayOrg:""瑞生診所"" },"
+"{
+name:""郭X心"", org:""新北市板橋區衛生所"", displayName:""郭X心"", displayOrg:""新北市板橋區衛生所"" },"
+"{
+name:""黃X文"", org:""恩主公醫院"", displayName:""黃X文"", displayOrg:""恩主公醫院"" },"
+"{
+name:""黃X瑜"", org:""長庚醫療財團法人林口長庚紀念醫院"", displayName:""黃X瑜"", displayOrg:""長庚醫療財團法人林口長庚紀念醫院"" },"
+"{
+name:""呂X鈞"", org:""廣詮診所"", displayName:""呂X鈞"", displayOrg:""廣詮診所"" },"
+"{
+name:""張X甄"", org:""仁濟醫院"", displayName:""張X甄"", displayOrg:""仁濟醫院"" },"
+"{
+name:""王X婷"", org:""辰林診所"", displayName:""王X婷"", displayOrg:""辰林診所"" },"
+"{
+name:""凃X芬"", org:""聯安診所"", displayName:""凃X芬"", displayOrg:""聯安診所"" },"
+"{
+name:""洪X鈺"", org:""亞東紀念醫院"", displayName:""洪X鈺"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""張X昭"", org:""亞東紀念醫院"", displayName:""張X昭"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""張X瑜"", org:""亞東紀念醫院"", displayName:""張X瑜"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""林X美"", org:""新北市泰山區衛生所"", displayName:""林X美"", displayOrg:""新北市泰山區衛生所"" },"
+"{
+name:""黃X芬"", org:""泰山區衛生所"", displayName:""黃X芬"", displayOrg:""泰山區衛生所"" },"
+"{
+name:""劉X宏"", org:""健康芬宏國際有限公司 / 負責人 "", displayName:""劉X宏"", displayOrg:""健康芬宏國際有限公司 / 負責人 "" },"
+"{
+name:""施X欣"", org:"""", displayName:""施X欣"", displayOrg:"""" },"
+"{
+name:""林X俊"", org:""廣詮診所"", displayName:""林X俊"", displayOrg:""廣詮診所"" },"
+"{
+name:""李X君"", org:""新北市土城區衛生所"", displayName:""李X君"", displayOrg:""新北市土城區衛生所"" },"
+"{
+name:""蘇X稜"", org:""新北市土城區衛生所"", displayName:""蘇X稜"", displayOrg:""新北市土城區衛生所"" },"
+"{
+name:""李X涵"", org:""亞東紀念醫院"", displayName:""李X涵"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""吳X維"", org:""山木耳鼻喉科診所"", displayName:""吳X維"", displayOrg:""山木耳鼻喉科診所"" },"
+"{
+name:""林X君"", org:""醫療財團法人徐元智先生醫藥基金會亞東紀念醫院"", displayName:""林X君"", displayOrg:""醫療財團法人徐元智先生醫藥基金會亞東紀念醫院"" },"
+"{
+name:""鄧X岑"", org:""板聯診所"", displayName:""鄧X岑"", displayOrg:""板聯診所"" },"
+"{
+name:""江X雯"", org:""瑞東診所"", displayName:""江X雯"", displayOrg:""瑞東診所"" },"
+"{
+name:""李X謓"", org:""美商亞培股份有限公司"", displayName:""李X謓"", displayOrg:""美商亞培股份有限公司"" },"
+"{
+name:""張X毓"", org:""土城區土城衛生所"", displayName:""張X毓"", displayOrg:""土城區土城衛生所"" },"
+"{
+name:""溫X欣"", org:""部立雙和醫院"", displayName:""溫X欣"", displayOrg:""部立雙和醫院"" },"
+"{
+name:""陳X蒼"", org:""佳佳藥局"", displayName:""陳X蒼"", displayOrg:""佳佳藥局"" },"
+"{
+name:""鄧X欣"", org:""愛爾麗診所"", displayName:""鄧X欣"", displayOrg:""愛爾麗診所"" },"
+"{
+name:""林X蓁"", org:""健成藥局"", displayName:""林X蓁"", displayOrg:""健成藥局"" },"
+"{
+name:""莊X嘉"", org:""新仁醫療社團法人新仁醫院"", displayName:""莊X嘉"", displayOrg:""新仁醫療社團法人新仁醫院"" },"
+"{
+name:""張X如"", org:""新北市蘆洲區衛生所"", displayName:""張X如"", displayOrg:""新北市蘆洲區衛生所"" },"
+"{
+name:""施X妮"", org:""新北巿土城區衛生所"", displayName:""施X妮"", displayOrg:""新北巿土城區衛生所"" },"
+"{
+name:""謝X琛"", org:""新北市板橋區衛生所"", displayName:""謝X琛"", displayOrg:""新北市板橋區衛生所"" },"
+"{
+name:""廖X惠"", org:""馬偕醫院"", displayName:""廖X惠"", displayOrg:""馬偕醫院"" },"
+"{
+name:""李X惠"", org:""新北市五股區衛生所"", displayName:""李X惠"", displayOrg:""新北市五股區衛生所"" },"
+"{
+name:""高X怡"", org:""新北市八里區衛生所"", displayName:""高X怡"", displayOrg:""新北市八里區衛生所"" },"
+"{
+name:""李X宜"", org:""新北市坪林區衛生所"", displayName:""李X宜"", displayOrg:""新北市坪林區衛生所"" },"
+"{
+name:""莊X惠"", org:""仁謙診所"", displayName:""莊X惠"", displayOrg:""仁謙診所"" },"
+"{
+name:""許X壬"", org:""和安診所"", displayName:""許X壬"", displayOrg:""和安診所"" },"
+"{
+name:""林X懷"", org:""行天宮醫療志業醫療財法人恩主公醫院"", displayName:""林X懷"", displayOrg:""行天宮醫療志業醫療財法人恩主公醫院"" },"
+"{
+name:""鄭X芯"", org:""亞東紀念醫院"", displayName:""鄭X芯"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""趙X君"", org:""新北市新店區衛生所"", displayName:""趙X君"", displayOrg:""新北市新店區衛生所"" },"
+"{
+name:""白X妮"", org:""台北市立關渡醫院"", displayName:""白X妮"", displayOrg:""台北市立關渡醫院"" },"
+"{
+name:""蔡X筠"", org:""宏彥親子耳鼻喉科診所"", displayName:""蔡X筠"", displayOrg:""宏彥親子耳鼻喉科診所"" },"
+"{
+name:""楊XX婷"", org:"""", displayName:""楊XX婷"", displayOrg:"""" },"
+"{
+name:""林X華"", org:""台北長庚"", displayName:""林X華"", displayOrg:""台北長庚"" },"
+"{
+name:""溫X玲"", org:""新北市五股區衛生所"", displayName:""溫X玲"", displayOrg:""新北市五股區衛生所"" },"
+"{
+name:""許X慧"", org:""新北市三峽區衛生所"", displayName:""許X慧"", displayOrg:""新北市三峽區衛生所"" },"
+"{
+name:""范X婷"", org:""新北市三峽區衛生所"", displayName:""范X婷"", displayOrg:""新北市三峽區衛生所"" },"
+"{
+name:""李X曄"", org:""常青樹股份有限公司附設台北市私立常青樹社區長照機構"", displayName:""李X曄"", displayOrg:""常青樹股份有限公司附設台北市私立常青樹社區長照機構"" },"
+"{
+name:""呂X真"", org:""亞東紀念醫院"", displayName:""呂X真"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""沈X君"", org:""鴻安蔘藥行"", displayName:""沈X君"", displayOrg:""鴻安蔘藥行"" },"
+"{
+name:""張X中"", org:""北醫附醫"", displayName:""張X中"", displayOrg:""北醫附醫"" },"
+"{
+name:""許X城"", org:""亞東紀念醫院"", displayName:""許X城"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""吳X雯"", org:""亞東紀念醫院"", displayName:""吳X雯"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""張X耀"", org:""亞東紀念醫院"", displayName:""張X耀"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""辛X宗"", org:""亞東紀念醫院"", displayName:""辛X宗"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""李X霖"", org:""亞東紀念醫院"", displayName:""李X霖"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""羅X榮"", org:""亞東紀念醫院"", displayName:""羅X榮"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""廖X智"", org:""亞東紀念醫院"", displayName:""廖X智"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""李X先"", org:""亞東紀念醫院"", displayName:""李X先"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""杜X明"", org:""亞東紀念醫院"", displayName:""杜X明"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""陳X淇"", org:""亞東紀念醫院"", displayName:""陳X淇"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""莊X博"", org:""亞東紀念醫院"", displayName:""莊X博"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""張X業"", org:""亞東紀念醫院"", displayName:""張X業"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""黃X正"", org:""亞東紀念醫院"", displayName:""黃X正"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""黃X惠"", org:""亞東紀念醫院"", displayName:""黃X惠"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""蔡X元"", org:""亞東紀念醫院"", displayName:""蔡X元"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""陳X慶"", org:""亞東紀念醫院"", displayName:""陳X慶"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""林X旭"", org:""亞東紀念醫院"", displayName:""林X旭"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""曾X憲"", org:""亞東紀念醫院"", displayName:""曾X憲"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""邱X偉"", org:""亞東紀念醫院"", displayName:""邱X偉"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""王X榮"", org:""77281341"", displayName:""王X榮"", displayOrg:""77281341"" },"
+"{
+name:""張X婷"", org:""亞東紀念醫院"", displayName:""張X婷"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""簡X恩"", org:""亞東紀念醫院"", displayName:""簡X恩"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""陳X琪"", org:""亞東紀念醫院"", displayName:""陳X琪"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""陳X珮"", org:""亞東紀念醫院"", displayName:""陳X珮"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""張X蘭"", org:""亞東紀念醫院"", displayName:""張X蘭"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""謝X謙"", org:""亞東紀念醫院"", displayName:""謝X謙"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""趙X茹"", org:""亞東紀念醫院"", displayName:""趙X茹"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""郭X彰"", org:""亞東紀念醫院"", displayName:""郭X彰"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""葉X婷"", org:""亞東紀念醫院"", displayName:""葉X婷"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""李X宇"", org:""亞東紀念醫院"", displayName:""李X宇"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""張X煥"", org:""亞東紀念醫院"", displayName:""張X煥"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""賴X萍"", org:""亞東紀念醫院"", displayName:""賴X萍"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""施X婷"", org:""亞東紀念醫院"", displayName:""施X婷"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""陳X芬"", org:""亞東紀念醫院"", displayName:""陳X芬"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""李X涵"", org:""亞東紀念醫院"", displayName:""李X涵"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""羅X融"", org:""亞東紀念醫院"", displayName:""羅X融"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""林蓉"", org:""亞東紀念醫院"", displayName:""林蓉"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""黃X煒"", org:""亞東紀念醫院"", displayName:""黃X煒"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""江X影"", org:""亞東紀念醫院"", displayName:""江X影"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""陳X秀"", org:""亞東紀念醫院"", displayName:""陳X秀"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""盧X尉"", org:""亞東紀念醫院"", displayName:""盧X尉"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""邱X華"", org:""亞東紀念醫院"", displayName:""邱X華"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""黃X翔"", org:""亞東紀念醫院"", displayName:""黃X翔"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""賴X賢"", org:""亞東紀念醫院"", displayName:""賴X賢"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""郭X庭"", org:""亞東紀念醫院"", displayName:""郭X庭"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""徐X佑"", org:""亞東紀念醫院"", displayName:""徐X佑"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""唐X威"", org:""亞東紀念醫院"", displayName:""唐X威"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""高X宏"", org:""亞東紀念醫院"", displayName:""高X宏"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""古X揚"", org:""亞東紀念醫院"", displayName:""古X揚"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""張X瑜"", org:""亞東紀念醫院"", displayName:""張X瑜"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""吳X瑀"", org:""亞東紀念醫院"", displayName:""吳X瑀"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""陳X郎"", org:""亞東紀念醫院"", displayName:""陳X郎"", displayOrg:""亞東紀念醫院"" },"
+"{
+name:""陳X宏"", org:""亞東紀念醫院"", displayName:""陳X宏"", displayOrg:""亞東紀念醫院"" },"
+{ "name": "宋X璇", "org": "亞東紀念醫院", "displayName": "宋X璇", "displayOrg": "亞東紀念醫院" },
+{ "name": "邱X浩", "org": "亞東紀念醫院", "displayName": "邱X浩", "displayOrg": "亞東紀念醫院" },
+{ "name": "陳X翰", "org": "亞東紀念醫院", "displayName": "陳X翰", "displayOrg": "亞東紀念醫院" },
+{ "name": "鄭X心", "org": "亞東紀念醫院", "displayName": "鄭X心", "displayOrg": "亞東紀念醫院" },
+{ "name": "阮X婷", "org": "亞東紀念醫院", "displayName": "阮X婷", "displayOrg": "亞東紀念醫院" },
+{ "name": "蔣X穎", "org": "亞東紀念醫院", "displayName": "蔣X穎", "displayOrg": "亞東紀念醫院" },
+{ "name": "徐X平", "org": "亞東紀念醫院", "displayName": "徐X平", "displayOrg": "亞東紀念醫院" },
+{ "name": "吳X彥", "org": "亞東紀念醫院", "displayName": "吳X彥", "displayOrg": "亞東紀念醫院" },
+{ "name": "白X芬", "org": "亞東紀念醫院", "displayName": "白X芬", "displayOrg": "亞東紀念醫院" },
+{ "name": "徐X翔", "org": "亞東紀念醫院", "displayName": "徐X翔", "displayOrg": "亞東紀念醫院" },
+{ "name": "彭X森", "org": "亞東紀念醫院", "displayName": "彭X森", "displayOrg": "亞東紀念醫院" },
+{ "name": "蔡X全", "org": "亞東紀念醫院", "displayName": "蔡X全", "displayOrg": "亞東紀念醫院" },
+{ "name": "楊X燁", "org": "亞東紀念醫院", "displayName": "楊X燁", "displayOrg": "亞東紀念醫院" },
+{ "name": "邱X霖", "org": "亞東紀念醫院", "displayName": "邱X霖", "displayOrg": "亞東紀念醫院" },
+{ "name": "陳X宏", "org": "亞東紀念醫院", "displayName": "陳X宏", "displayOrg": "亞東紀念醫院" },
+{ "name": "鄭X芸", "org": "亞東紀念醫院", "displayName": "鄭X芸", "displayOrg": "亞東紀念醫院" },
+{ "name": "謝X芳", "org": "亞東紀念醫院", "displayName": "謝X芳", "displayOrg": "亞東紀念醫院" },
+{ "name": "楊X喬", "org": "亞東紀念醫院", "displayName": "楊X喬", "displayOrg": "亞東紀念醫院" },
+{ "name": "李X妹", "org": "亞東紀念醫院", "displayName": "李X妹", "displayOrg": "亞東紀念醫院" },
+{ "name": "林X含", "org": "亞東紀念醫院", "displayName": "林X含", "displayOrg": "亞東紀念醫院" },
+{ "name": "黃X美", "org": "亞東紀念醫院", "displayName": "黃X美", "displayOrg": "亞東紀念醫院" },
+{ "name": "盧X君", "org": "亞東紀念醫院", "displayName": "盧X君", "displayOrg": "亞東紀念醫院" },
+{ "name": "翁X閔", "org": "亞東紀念醫院", "displayName": "翁X閔", "displayOrg": "亞東紀念醫院" },
+{ "name": "莊X安", "org": "亞東紀念醫院", "displayName": "莊X安", "displayOrg": "亞東紀念醫院" },
     ];
 
     let currentTab = "all"; // all / internal
