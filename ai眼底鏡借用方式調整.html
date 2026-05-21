@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>糖尿病視網膜病變 AI 篩檢設備借用與協助機制調整說明</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --soft-blue: #eff6ff;
+      --border: #e5e7eb;
+      --accent: #f59e0b;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 36px 24px 72px;
+      padding-right: 104px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1d4ed8, #38bdf8);
+      color: #fff;
+      padding: 42px 36px;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+    }
+
+    .hero .tag {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 820px;
+      font-size: 17px;
+      opacity: 0.96;
+    }
+
+    .notice {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-left: 6px solid var(--accent);
+      padding: 18px 22px;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+    }
+
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .toc a {
+      display: block;
+      text-decoration: none;
+      color: var(--primary-dark);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 26px;
+      color: #111827;
+      border-bottom: 2px solid var(--soft-blue);
+      padding-bottom: 10px;
+    }
+
+    h3 {
+      margin: 22px 0 10px;
+      font-size: 20px;
+      color: #1e40af;
+    }
+
+    h4 {
+      margin: 18px 0 8px;
+      font-size: 17px;
+      color: #374151;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul, ol {
+      margin: 8px 0 12px 1.4em;
+      padding: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mini-card {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #111827;
+      font-size: 18px;
+    }
+
+    .highlight {
+      background: var(--soft-blue);
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+      padding: 14px 16px;
+      color: #1e3a8a;
+      font-weight: 700;
+      margin: 12px 0;
+    }
+
+    .method {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      margin-top: 18px;
+      background: #ffffff;
+    }
+
+    .method-title {
+      display: inline-block;
+      background: #eef2ff;
+      color: #3730a3;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      overflow: hidden;
+      border-radius: 14px;
+      font-size: 15px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    td:last-child, th:last-child {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .right-fixed {
+      position: fixed;
+      top: 50%;
+      right: 24px;
+      transform: translateY(-50%);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .float-btn {
+      width: 64px;
+      min-height: 64px;
+      border-radius: 20px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 10px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .float-btn:hover {
+      transform: translateY(-2px);
+      background: var(--primary-dark);
+    }
+
+    .float-note {
+      max-width: 168px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 28px;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding: 24px 16px 96px;
+      }
+
+      .toc, .grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 22px;
+      }
+
+      .right-fixed {
+        top: auto;
+        right: 16px;
+        bottom: 16px;
+        transform: none;
+      }
+
+      .float-note {
+        display: none;
+      }
+
+      .float-btn {
+        width: auto;
+        min-height: auto;
+        border-radius: 999px;
+        padding: 12px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="right-fixed">
+    <button class="float-btn" onclick="openFutureLink()">相關<br>連結</button>
+    <div class="float-note">可修改程式中的連結，放預約表單、公告或簽收單。</div>
+  </div>
+
+  <main class="page">
+    <header class="hero">
+      <span class="tag">114年7月起適用｜草案版</span>
+      <h1>糖尿病視網膜病變 AI 篩檢設備借用與協助機制調整說明</h1>
+      <p>為兼顧設備使用效率、院所需求及計畫推動品質，亞東醫院依上半年執行情形，調整設備借用方式與協助機制。</p>
+    </header>
+
+    <div class="notice">
+      感謝各院所於114年上半年支持糖尿病視網膜病變 AI 篩檢推動工作，部分院所已陸續參與設備借用、篩檢服務及相關合作模式討論，共同協助糖尿病病人眼底篩檢服務之推展。
+    </div>
+
+    <nav class="toc" aria-label="頁面目錄">
+      <a href="#difficulties">一、目前執行上的困難</a>
+      <a href="#borrow">二、設備借用方式</a>
+      <a href="#methods">三、協助方式與支持機制</a>
+      <a href="#period">四、實施期間及滾動調整</a>
+    </nav>
+
+    <section id="difficulties">
+      <h2>一、目前執行上的困難</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <strong>1. 設備資源有限</strong>
+          目前設備數量有限，部分院所因提前預約較長借用時段，導致其他有需求院所較難安排，亦影響設備整體周轉率。
+        </div>
+        <div class="mini-card">
+          <strong>2. 執行模式需滾動調整</strong>
+          本計畫推動初期，各院所依不同執行模式辦理篩檢服務，包含自主拍攝、護理支援及活動搭配等方式。因應院所實際需求、設備使用情形及執行經驗累積，後續將針對借用方式與協助機制進行適度調整，以提升整體執行便利性與設備運用效率。
+        </div>
+        <div class="mini-card">
+          <strong>3. 護理支援需提前排班</strong>
+          因院內護理人力需提前安排，若未能及早確認需求，較難確保有需求的場次均可提供護理支援。
+        </div>
+      </div>
+    </section>
+
+    <section id="borrow">
+      <h2>二、設備借用方式</h2>
+
+      <h3>（一）借用期間</h3>
+      <p>自 <strong>114年7月起實施</strong>。</p>
+
+      <h3>（二）可借用時段</h3>
+      <p>原則開放：</p>
+      <ul>
+        <li><strong>星期二至星期三</strong></li>
+        <li><strong>星期五至星期日</strong></li>
+      </ul>
+      <p>設備載送時間將另行協調，若設備提前送達且院所具執行條件，可於設備送達後提前開始拍攝。</p>
+
+      <h3>（三）借用方式調整</h3>
+      <div class="highlight">院所提出借用需求，由亞東醫院統一協助於衛生局平台登記與審核。</div>
+      <p>請院所於指定方式提出預約需求，並提供先前申請之平台帳號資訊，由亞東醫院協助系統借用申請與相關行政作業。</p>
+
+      <h3>（四）借用原則</h3>
+      <ol>
+        <li><strong>於115年6月30日前借用達2次以上之院所：</strong>為兼顧設備資源公平性，下半年原則以 <strong>借用1次為限</strong>。</li>
+        <li><strong>下半年借用限制：</strong>每院所原則最多可先預約 <strong>2次借用時段</strong>。</li>
+        <li><strong>每月最後一週暫停借用：</strong>因需保留設備供衛生所執行相關診所業務，故每月最後一週原則不開放預約借用。</li>
+      </ol>
+    </section>
+
+    <section id="methods">
+      <h2>三、協助方式與支持機制（請擇一）</h2>
+      <p>為配合各院所不同人力配置與執行需求，提供以下三種合作模式：</p>
+
+      <div class="method">
+        <div class="method-title">方式一｜院所自行拍攝－彈性支持型</div>
+        <p>由診所自行完成拍攝。</p>
+        <p>為鼓勵院所推動糖尿病視網膜病變篩檢及提升民眾參與意願：</p>
+        <div class="highlight">亞東醫院將視計畫經費運用情形，提供每位完成拍攝個案50元支持資源（依實際拍攝人數核發）。</div>
+        <p>院所可依實際執行需求，彈性選擇：</p>
+        <ul>
+          <li>作為民眾參與獎勵使用</li>
+          <li>作為院所活動執行支持或相關推動用途</li>
+        </ul>
+        <p>惟為確認實際拍攝情形，不論支持資源之使用方式為何，皆須由完成拍攝之民眾簽名確認，以作為執行佐證。</p>
+        <p><strong>本方案不另提供拍攝獎勵金。</strong></p>
+        <p><strong>適合：</strong>已具拍攝能力，希望保有較高執行彈性之院所。</p>
+      </div>
+
+      <div class="method">
+        <div class="method-title">方式二｜院所自行拍攝－獎勵金支持型</div>
+        <p>由診所自行完成拍攝。</p>
+        <p>為鼓勵院所自主推動糖尿病視網膜病變篩檢及提升設備使用效益，亞東醫院依單次借用期間拍攝量提供執行支持。</p>
+        <h4>（一）基本支持</h4>
+        <div class="highlight">凡完成借用並執行拍攝之院所，提供基本執行支持600元。</div>
+        <p>作為行政安排、病人聯繫及場次執行支持。</p>
+        <h4>（二）達標加碼機制</h4>
+        <p>以 <strong>單次借用期間總拍攝量（含所有拍攝時段）</strong> 計算。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>單次借用總拍攝量</th>
+              <th>加碼支持</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>達100人</td><td>+1,400元</td></tr>
+            <tr><td>達150人</td><td>再加碼 +2,000元</td></tr>
+            <tr><td>達225人</td><td>再加碼 +2,000元</td></tr>
+          </tbody>
+        </table>
+        <table>
+          <thead>
+            <tr>
+              <th>拍攝量</th>
+              <th>總支持金額</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>未滿100人</td><td>600元</td></tr>
+            <tr><td>100–149人</td><td>2,000元</td></tr>
+            <tr><td>150–224人</td><td>4,000元</td></tr>
+            <tr><td>≥225人</td><td>6,000元</td></tr>
+          </tbody>
+        </table>
+        <p><strong>本方案不提供民眾或院所禮券支持。</strong></p>
+        <p>獎勵金由院所推派代表簽領，並依相關規定列入個人所得申報。</p>
+        <p>本計畫以 <strong>糖尿病病人為主要服務對象</strong>，請院所優先安排符合計畫目的之個案接受拍攝。</p>
+        <p>亞東醫院得視設備使用效益、計畫執行情形及經費運用狀況，保留支持方式與核發調整權利。</p>
+        <p><strong>適合：</strong>具穩定糖尿病病人量能及自主拍攝能力之院所。</p>
+      </div>
+
+      <div class="method">
+        <div class="method-title">方式三｜申請亞東護理師協助拍攝</div>
+        <p>由亞東醫院安排護理師協助現場拍攝。</p>
+        <div class="highlight">本方案不提供拍攝獎勵金及禮券支持。</div>
+        <p>另因亞東護理人力需提前排班（約前一月22日後確認），若屆時無可安排之護理人力，亞東醫院得取消該場次協助，並請院所改選方式一或方式二執行。</p>
+        <p><strong>適合：</strong>尚未熟悉拍攝流程或需初期輔導之院所。</p>
+      </div>
+    </section>
+
+    <section id="period">
+      <h2>四、實施期間及滾動調整機制</h2>
+      <div class="highlight">本調整機制自114年7月起實施，原則適用至116年6月止。</div>
+      <p>惟因計畫推動期間，可能因主管機關政策方向、計畫執行需求、設備運用情形、院所實務回饋、經費配置與資源安排等因素有所調整，亞東醫院將視實際執行情形滾動檢討並適度修正借用、協助及支持機制，相關調整將另行通知。</p>
+    </section>
+
+    <div class="footer">亞東醫院｜糖尿病視網膜病變 AI 篩檢設備借用與協助機制調整說明</div>
+  </main>
+
+  <script>
+    function openFutureLink() {
+      // 之後要新增連結時，修改下面這一行即可：
+      // 例如：const url = "https://forms.gle/你的表單連結";
+      const url = "#";
+
+      if (url === "#") {
+        alert("目前尚未設定連結，之後可將程式中的 url 改成預約表單、公告或簽收單連結。");
+        return;
+      }
+
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+</html>
