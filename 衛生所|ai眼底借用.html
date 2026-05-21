@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>衛生所版｜糖尿病視網膜病變 AI 篩檢設備借用與協助機制說明</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --soft: #ecfdf5;
+      --border: #e5e7eb;
+      --accent: #f59e0b;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 36px 24px 72px;
+      padding-right: 104px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0f766e, #22c55e);
+      color: #fff;
+      padding: 42px 36px;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.25;
+    }
+
+    .hero p { margin: 0; max-width: 820px; font-size: 17px; }
+
+    .notice {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-left: 6px solid var(--accent);
+      padding: 18px 22px;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+    }
+
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .toc a {
+      display: block;
+      text-decoration: none;
+      color: var(--primary-dark);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(15,23,42,.04);
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(15,23,42,.04);
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 26px;
+      color: #111827;
+      border-bottom: 2px solid var(--soft);
+      padding-bottom: 10px;
+    }
+
+    h3 { margin: 22px 0 10px; font-size: 20px; color: var(--primary-dark); }
+    p { margin: 0 0 12px; }
+    ul, ol { margin: 8px 0 12px 1.4em; padding: 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mini-card, .method {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #111827;
+      font-size: 18px;
+    }
+
+    .highlight {
+      background: var(--soft);
+      border: 1px solid #bbf7d0;
+      border-radius: 16px;
+      padding: 14px 16px;
+      color: #14532d;
+      font-weight: 700;
+      margin: 12px 0;
+    }
+
+    .method {
+      background: #fff;
+      margin-top: 18px;
+      padding: 22px;
+    }
+
+    .method-title {
+      display: inline-block;
+      background: #ccfbf1;
+      color: #134e4a;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      border-radius: 14px;
+      overflow: hidden;
+      font-size: 15px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { background: #f3f4f6; color: #111827; }
+
+    .right-fixed {
+      position: fixed;
+      top: 50%;
+      right: 24px;
+      transform: translateY(-50%);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .float-btn {
+      width: 64px;
+      min-height: 64px;
+      border-radius: 20px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    .float-btn:hover { background: var(--primary-dark); }
+
+    .float-note {
+      max-width: 168px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 28px;
+    }
+
+    @media (max-width: 900px) {
+      .page { padding: 24px 16px 96px; }
+      .toc, .grid { grid-template-columns: 1fr; }
+      section { padding: 22px; }
+      .right-fixed { top: auto; right: 16px; bottom: 16px; transform: none; }
+      .float-note { display: none; }
+      .float-btn { width: auto; min-height: auto; border-radius: 999px; padding: 12px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="right-fixed">
+    <button class="float-btn" onclick="openFutureLink()">相關<br>連結</button>
+    <div class="float-note">可修改程式中的連結，放預約表單、簽收單或衛生局公告。</div>
+  </div>
+
+  <main class="page">
+    <header class="hero">
+      <span class="tag">衛生所版｜草案</span>
+      <h1>糖尿病視網膜病變 AI 篩檢設備借用與協助機制說明</h1>
+      <p>為協助衛生所推動糖尿病病人眼底篩檢服務，並兼顧多家衛生所借用需求、設備調度與護理人力安排，說明設備借用與協助方式如下。</p>
+    </header>
+
+    <div class="notice">
+      本說明適用於衛生所辦理糖尿病視網膜病變 AI 篩檢相關設備借用與協助申請。因設備數量有限，亞東醫院將依各衛生所需求、設備使用情形及衛生局協調結果進行安排。
+    </div>
+
+    <nav class="toc" aria-label="頁面目錄">
+      <a href="#principle">一、借用安排原則</a>
+      <a href="#schedule">二、保留借用時段</a>
+      <a href="#support">三、協助方式</a>
+      <a href="#period">四、滾動調整機制</a>
+    </nav>
+
+    <section id="principle">
+      <h2>一、借用安排原則</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <strong>1. 以衛生所需求協調安排</strong>
+          因多家衛生所可能同時有設備借用需求，亞東醫院將依各衛生所提出之時段、活動安排及設備可用情形進行協調。
+        </div>
+        <div class="mini-card">
+          <strong>2. 設備數量有限</strong>
+          若同一期間借用需求較多，可能無法完全依各衛生所原定時間安排，將視實際情形協調調整。
+        </div>
+        <div class="mini-card">
+          <strong>3. 必要時協調衛生局車輛</strong>
+          若最後一週設備調度仍無法滿足衛生所需求，將視情形協調衛生局協助安排車輛或相關運送方式。
+        </div>
+      </div>
+    </section>
+
+    <section id="schedule">
+      <h2>二、保留借用時段</h2>
+      <h3>（一）每月最後一週保留予衛生所使用</h3>
+      <div class="highlight">每月最後一週，如該週具完整星期一至星期五，原則保留作為衛生所借用設備時段。</div>
+      <p>因衛生所需求可能較集中，亞東醫院將依各衛生所提出之需求、設備數量及實際載送可行性進行安排。</p>
+
+      <h3>（二）若保留週仍無法安排</h3>
+      <p>若多家衛生所於同一保留週提出借用需求，導致設備無法於該週全數安排，將視情形與衛生局協調後續調度方式，包含協調衛生局車輛協助設備載送或另行安排其他可行時段。</p>
+    </section>
+
+    <section id="support">
+      <h2>三、協助方式與支持機制（預計擇一）</h2>
+      <p>衛生所可依自身人力與活動規劃，選擇以下協助方式：</p>
+
+      <div class="method">
+        <div class="method-title">方式一｜衛生所自行拍攝－禮券支持型</div>
+        <p>由衛生所自行完成拍攝。</p>
+        <p>亞東醫院將視計畫經費運用情形，提供完成拍攝個案之禮券支持資源。</p>
+        <div class="highlight">不論禮券作為民眾參與獎勵或其他活動推動用途，皆須由完成拍攝之民眾簽名確認，以作為執行佐證。</div>
+        <p><strong>本方案不另提供護理師現場拍攝支援。</strong></p>
+      </div>
+
+      <div class="method">
+        <div class="method-title">方式二｜申請亞東護理師協助拍攝</div>
+        <p>由亞東醫院安排護理師協助現場拍攝。</p>
+        <div class="highlight">本方案不提供禮券支持。</div>
+        <p>因亞東護理人力需提前排班，護理師支援需配合院內排班時程安排，較難確保有需求的場次均可提供護理支援。</p>
+        <p>若屆時無可安排之護理人力，將另行通知衛生所，並視情形改採自行拍攝或另行協調可行時段。</p>
+      </div>
+    </section>
+
+    <section id="period">
+      <h2>四、實施期間及滾動調整機制</h2>
+      <div class="highlight">本借用與協助機制將依計畫執行情形、設備運用情形、衛生所實務需求及衛生局協調結果滾動調整。</div>
+      <p>如後續因主管機關政策方向、計畫執行需求、設備調度、經費配置或人力安排等因素需調整相關規定，亞東醫院將另行通知。</p>
+    </section>
+
+    <div class="footer">亞東醫院｜糖尿病視網膜病變 AI 篩檢設備借用與協助機制說明｜衛生所版</div>
+  </main>
+
+  <script>
+    function openFutureLink() {
+      // 之後要新增連結時，修改下面這一行即可：
+      // 例如：const url = "https://forms.gle/你的表單連結";
+      const url = "#";
+
+      if (url === "#") {
+        alert("目前尚未設定連結，之後可將程式中的 url 改成預約表單、簽收單或衛生局公告連結。");
+        return;
+      }
+
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+</html>
